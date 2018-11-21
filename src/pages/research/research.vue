@@ -37,7 +37,8 @@
 
           request.get(url, params).
           then((res)=>{
-            this.login(res.);
+            this.login(res.mobile);
+            alert(res.mobile)
           })
         }
       },
