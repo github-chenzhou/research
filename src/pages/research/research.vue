@@ -7,7 +7,9 @@
 </template>
 
 <script>
- import navCmp from '@/components/common/nav.vue'
+  import navCmp from '@/components/common/nav.vue'
+  import request from '@/utils/request.js'
+  import api from '@/utils/api.js'
   
   export default {
     name: 'research-page',
@@ -30,7 +32,29 @@
        */
       checkAuth(code) {
         if(code) {
+          let url = api.GET_USER_INFO;
+          let params = { code };
 
+          request.get(url, params).
+          then((res)=>{
+            this.login(res.);
+          })
+        }
+      },
+
+      /*
+       * @method 登陆
+       * @param phone
+       */
+      login(phone) {
+        if(code) {
+          let url = api.LOGIN;
+          let params = { phoneNum: phone, actionType: 'login' };
+
+          request.get(url, params).
+          then((res)=>{
+            alert(res.personId)
+          })
         }
       }
     },

@@ -6,10 +6,10 @@ let api
 if (process.env.NODE_ENV === 'production') {
     api = {
         // 用户权限
-        'GET_USER_INFO': '/v/lesson/lesson_user_info',
+        'GET_USER_INFO': '/services/qy-weixin/user',
 
-        // 软件版本号
-        'GET_SOFT_VERSION': '/v/lesson/lesson_ppt_version',
+        // /api/userServlet?phoneNum=13721441400&actionType=login#/
+        'LOGIN': '/api/userServle',
 
         /*------------------*\
            $ 接收器 start
@@ -25,8 +25,11 @@ if (process.env.NODE_ENV === 'production') {
     }
 }else {
     api = {
-        // 停服务通知
-        'HOLD_SERVICE_NOTICE': 'http://apimock.xuetangx.com/mock/115/pc/hole_service_notice/',
+        // 用户权限
+        'GET_USER_INFO': '/services/qy-weixin/user',
+
+        // /api/userServlet?phoneNum=13721441400&actionType=login#/
+        'LOGIN': '/api/userServle',
 
 
         /*------------------*\
