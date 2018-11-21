@@ -14,6 +14,33 @@
     components: {
       navCmp
     },
+    data() {
+      return {
+        index: 0
+      };
+    },
+    computed: {},
+    watch: {},
+    filters: {},
+    mixins: [],
+    methods: {
+      /*
+       * @method 权限验证
+       * @param code
+       */
+      checkAuth(code) {
+        if(code) {
+
+        }
+      }
+    },
+    created() {
+      let code = this.$route.query.code;
+      this.checkAuth(code);
+    },
+    mounted() {
+    },
+    beforeDestroy() {}
   }
 </script>
 

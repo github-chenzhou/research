@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import Promise from 'bluebird'
-import Cookies from 'js-cookie'
+// import Cookies from 'js-cookie'
 
 // Promise
 // window.Promise = window.Promise || Promise;
@@ -11,33 +11,19 @@ import Cookies from 'js-cookie'
 
 const handleResponse = (res) => {
   // 支付接口使用的 status 判断
-  if (res.data.success || res.data.status === 0) {
+  if (res.checkState === 'success' || res.errcode === 0) {
     return Promise.resolve(res.data)
   } else {
     // 用户session丢失
     if(res.data.op === 'redirect') {
-      const sUrl = res.data.url;
-      const iNext = sUrl.indexOf('next=');
-      let newUrl = sUrl.substring(0,iNext);
-
-      newUrl += 'next=' + location.pathname;
-      setTimeout(() => {
-        location.href = '//' + location.host + newUrl;
-      }, 500)
-
+     
       return;
     }
 
     // 没有权限
-    if(res.data.status_code === 1 || res.data.status_code === 2 || res.data.status_code === 4) {
-      location.href = '/v/index/course/normalcourse/error/' + res.data.status_code;
-    }
-
-    // 没有填写信息 跳转个人信息完善页
-    if(res.data.status_code === 5) {
-      // let nextURL = location.href;
-      // location.href = `/v/index/edituserinfo_simple?next_url=${nextURL}`;
-    }
+    // if(res.data.status_code === 1 || res.data.status_code === 2 || res.data.status_code === 4) {
+    //   location.href = '/v/index/course/normalcourse/error/' + res.data.status_code;
+    // }
 
     return Promise.reject(res.data)
   }
@@ -69,7 +55,7 @@ export default {
     params = params || {}
 
     // post统一csrftoken
-    axios.defaults.headers['X-CSRFToken'] = Cookies.get('csrftoken') || ''
+    // axios.defaults.headers['X-CSRFToken'] = Cookies.get('csrftoken') || ''
 
     return axios
       .post(url, params)
