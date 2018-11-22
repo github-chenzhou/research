@@ -7,9 +7,11 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
   import navCmp from '@/components/common/nav.vue'
   import request from '@/utils/request.js'
   import api from '@/utils/api.js'
+  import { isSupported } from '@/utis/util'
   
   export default {
     name: 'research-page',
@@ -21,7 +23,12 @@
         index: 0
       };
     },
-    computed: {},
+    computed: {
+      ...mapGetters([
+        'mobile',
+        'user'
+      ])
+    },
     watch: {},
     filters: {},
     mixins: [],
@@ -35,10 +42,23 @@
           let url = api.GET_USER_INFO;
           let params = { code };
 
+          if(this.mobile) {
+            this.login(this.mobile);
+            
+            return this;
+          }
+
           request.get(url, params).
           then((res)=>{
             this.login(res.mobile);
-            alert(res.mobile)
+
+            this.$store.commit('setMobile', res.mobile);
+
+            let key = 'login-mobile';
+            if(isSupported(window.localStorage)) {
+              res.mobile && localStorage.setItem(key, res.mobile);
+            }
+
           })
         }
       },
@@ -48,16 +68,19 @@
        * @param phone
        */
       login(phone) {
-        if(code) {
+        if(phone) {
           let url = api.LOGIN;
           let params = { phoneNum: phone, actionType: 'login' };
 
           request.get(url, params).
           then((res)=>{
+            this.$store.commit('setUser', res);
+
             alert(res.personId)
           })
         }
-      }
+      },
+
     },
     created() {
       let code = this.$route.query.code;
