@@ -1,12 +1,12 @@
 <template>
   <section class="personal__page page">
     <!-- 分类导航 项目 成果 -->
-    <nav class="personal__tabs" >
-      <div class="tab__item active" @click="handleTabs(1)">
+    <nav class="personal__tabs">
+      <div class="tab__item active">
         <span class="f15 pr10">我的项目</span>
         <span>(100)</span>
       </div>
-      <div class="tab__item " @click="handleTabs(2)">
+      <div class="tab__item ">
         <span class="f15 pr10">我的成果</span>
         <span>(80)</span>
       </div>
@@ -70,11 +70,13 @@ export default {
   },
   mixins: [],
   methods: {
+ 
+
     /*
-     * @method tab切换
-     * @param
-     */
-    handleTabs() {
+      * @method 返回
+      * @param
+      */
+    handleBack() {
       this.$router.back();
     }
   },
