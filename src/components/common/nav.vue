@@ -96,7 +96,7 @@ export default {
     width: 100vw;
     height: 1.066667rem;
 
-    padding: 0 .4rem;
+    padding: 0 0.266667rem;
   }
 
   .navs {
