@@ -11,7 +11,7 @@
   import navCmp from '@/components/common/nav.vue'
   import request from '@/utils/request.js'
   import api from '@/utils/api.js'
-  import { isSupported } from '@/utis/util'
+  import { isSupported } from '@/utils/util.js'
   
   export default {
     name: 'research-page',
@@ -60,6 +60,9 @@
             }
 
           })
+        } else {
+          let phone = 13721441400;
+          this.login(phone);
         }
       },
 
@@ -75,8 +78,6 @@
           request.get(url, params).
           then((res)=>{
             this.$store.commit('setUser', res);
-
-            alert(res.personId)
           })
         }
       },

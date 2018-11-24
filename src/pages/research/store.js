@@ -13,7 +13,10 @@ export default new Vuex.Store({
   	user: null,
   	// 用户角色
   	role: null,
-
+    // 我的项目列表
+    projects: [],
+    // 我的成果列表
+    achievements: []
   },
   getters: {
     mobile: state => state.mobile,
@@ -29,6 +32,12 @@ export default new Vuex.Store({
     },
     setRole (state, role) {
       state.role = role
+    },
+    setProjects (state, projects) {
+      state.projects = projects
+    },
+    setAchievements (state, achievements) {
+      state.achievements = achievements
     },
   },
   actions: {

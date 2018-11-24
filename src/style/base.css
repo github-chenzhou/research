@@ -300,9 +300,15 @@ html * {
   width: 100vw;
   /* min-height: calc(100vh - 1.066667rem); */
   height: calc(100vh - 1.066667rem);
-  overflow: hidden;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 
   background: #f6f7f8;
 
+}
+
+
+.page__inner {
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }

@@ -22,5 +22,21 @@ module.exports = {
     // 并且如果找不到的话，就回退到 `public/index.html`。
     // 输出文件名会被推导为 `subpage.html`。
     // peptide: 'src/subpage/main.js'
+  },
+  // 代理
+  devServer: {
+    proxy: 'http://192.168.89.104:8088'
   }
+  // devServer: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'http://192.168.89.104:8088',
+  //       // ws: true,
+  //       changeOrigin: true
+  //     },
+  //     '/services': {
+  //       target: 'http://192.168.89.104:9000'
+  //     }
+  //   }
+  // }
 }
