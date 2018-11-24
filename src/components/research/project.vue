@@ -1,48 +1,25 @@
 <template>
-  <section class="personal__page page">
-    <!-- 分类导航 项目 成果 -->
-    <nav class="personal__tabs">
-      <div class="tab__item active">
-        <span class="f15 pr10">我的项目</span>
-        <span>(100)</span>
-      </div>
-      <div class="tab__item ">
-        <span class="f15 pr10">我的成果</span>
-        <span>(80)</span>
-      </div>
-    </nav>
-
+  <section class="project__page page">
     <!-- 列表 -->
-    <section class="list__wrap">
+    <section class="list__wrap page__inner">
       <ul class="page__list">
         <li class="list__item">
           <div class="item__box">
-            <h3 class="f15">我的立项测试数据</h3>
-            <p class="f12">2018.10.8</p>
-          </div>
-          <div class="item__box pb10 f14">
-            <h3 class="">闫工</h3>
-            <p class="blue">200万</p>
+            <label class="box__left f16">项目编号</label>
+            <h3 class="box__right c333 f16">我的立项测试数据</h3>
           </div>
         </li>
         <li class="list__item">
           <div class="item__box">
-            <h3 class="f15">我的立项测试数据</h3>
-            <p class="f12">2018.10.8</p>
-          </div>
-          <div class="item__box pb10 f14">
-            <h3 class="">闫工</h3>
-            <p class="blue">200万</p>
+            <label class="box__left f16">项目名称</label>
+            <h3 class="box__right c333 f16">{{ project.title }}</h3>
           </div>
         </li>
-        <li class="list__item">
+        <!-- 项目属性 -->
+        <li class="list__item" v-for="(value, key) in project.content">
           <div class="item__box">
-            <h3 class="f15">我的立项测试数据</h3>
-            <p class="f12">2018.10.8</p>
-          </div>
-          <div class="item__box pb10 f14">
-            <h3 class="">闫工</h3>
-            <p class="">200万</p>
+            <label class="box__left f16">{{ key }}</label>
+            <h3 class="box__right c333 f16">{{ value }}</h3>
           </div>
         </li>
       </ul>
@@ -52,102 +29,109 @@
 </template>
 
 <script>
-import Vue from "vue";
+import {mapGetters} from 'vuex'
+import request from '@/utils/request.js'
+import api from '@/utils/api.js'
 
 
 export default {
-  name: "research-personal",
+  name: "research-project",
   data() {
     return {
-      index: 0
+      id: 0,
+      project: {
+        'content': {
+          '[获奖作者]': '金海娜', 
+          '[所属科室]': '外国语学院', 
+          '[获奖级别]': '其它', 
+          '[获奖等级]': '其他奖', 
+          '[获奖日期]': '2017-05-27', 
+          '[发证机关]': '文化部', 
+          '[审核状态]': '学校通过' 
+        },
+        'title': '图景与前景：2016中外影视互译合作研究报告',
+        'date': '2018-08-28',
+        'type': '研究报告',
+        'fee': '100万',
+        'principal': '负责人',
+        'productid': 'yey234782348923418934234'
+      }
     };
   },
   components: {},
-  computed: {},
+  computed: {
+    ...mapGetters([
+      'mobile',
+      'user'
+    ])
+  },
   watch: {},
   filters: {
     formatTime(time) {}
   },
   mixins: [],
   methods: {
- 
+    /*
+     * @method 加载数据
+     * @param
+     */
+    getData(id) {
+      let url = api.GET_PROJECT;
+      let params = { userid: '', actionType: 'login' };
+
+      request.get(url, params).
+      then((res)=>{
+        this.project = res;
+        // this.$store.commit('setProjects', this.projects);
+      })
+    },
 
     /*
-      * @method 返回
-      * @param
-      */
+     * @method 返回
+     * @param
+     */
     handleBack() {
       this.$router.back();
     }
   },
   created() {
+    let id = this.$route.params.id;
   },
   mounted() {
-
+    document.title = '项目详情';
   },
   beforeDestroy() {}
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss">
-  .personal__tabs {
-    display: flex;
-    justify-content: space-between;
-    justify-items: center;
+<style lang="scss" scoped>
+
+  .list__wrap {
     width: 100vw;
-    height: 1rem;
+    padding: .4rem .266667rem;
+    min-height: calc(100vh - 1.066667rem);
     background: #fff;
   }
 
-  .tab__item {
-    flex: 1;
-    line-height: 1rem;
-    border-bottom: 3px solid #fff;
-  }
+  .item__box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  .active {
-    border-bottom: 3px solid #639EF4;
-  }
-
-  .list__wrap {
-    padding: .4rem .266667rem;
-  }
-
-  .page__list {
-    width: calc(100vw - .533333rem);
-    min-height: 40vh;
-    border-left: 1px solid rgba(93,161,244,.5);
-  }
-
-
-  .list__item {
     position: relative;
-    padding: 0 0 .4rem .266667rem;
-
-    .item__box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      line-height: .8rem;
-      padding: 0 .133333rem;
-      background: #fff;
-      border-radius: 2px;
-    }
+    padding: 0.133333rem 0 0.133333rem 0;
+    min-height: 1.2rem;
+    border-bottom: 1px solid #e5e5e5;
   }
 
-  .list__item:before {
-    content: '';
-    position: absolute;
-    top: .293333rem;
-    left: -0.093333rem;
-    display: block;
-    width: .133333rem;
-    height: .133333rem;
-    background: #5096F5;
-    border-radius: 50%;
-    box-shadow: 0 0 .133333rem rgba(80, 150, 245, 1);
+  .box__left {
+    min-width: 80px;
+    text-align: left;
+  }
+
+  .box__right {
+    text-align: right;
   }
 
 </style>

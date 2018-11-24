@@ -1,6 +1,6 @@
 <template>
   <section class="index__page page">
-  	<div class="charts">
+  	<div class="page__inner">
       <section id="charts_1" class="chart__1">
   	  </section>
 

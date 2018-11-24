@@ -5,8 +5,8 @@ import Home from '@/components/research/home.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  // mode: 'hash',
+  // mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -23,9 +23,18 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ '@/components/research/personal.vue')
     },
     {
+      path: '/project/:id',
+      name: 'project',
+      component: () => import('@/components/research/project.vue')
+    },
+    {
       path: '/approval',
       name: 'approval',
       component: () => import('@/components/research/approval.vue')
+    },{
+      path: '/approvaldetail/:id',
+      name: 'approvaldetail',
+      component: () => import('@/components/research/approval-detail.vue')
     },
   ]
 })
