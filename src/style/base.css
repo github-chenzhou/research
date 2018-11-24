@@ -76,6 +76,10 @@ html * {
   color: #fff;
 }
 
+.mt10 {
+  margin-top: 0.266667rem;
+}
+
 .mb10 {
   margin-bottom: 0.266667rem;
 }

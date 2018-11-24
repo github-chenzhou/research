@@ -10,13 +10,14 @@
 <template>
   <section id="nav" class="nav-cmp">
   	<nav class="nav__wrap f14" @click="handleTab">
-  		<div class="">
-  			<i class="iconfont icon-logo f18"></i>
+  		<div class="f16">
+  			<!-- <i class="iconfont icon-logo f18"></i> -->
         <router-link to="/" data-index="1" :class="['nav--item ', active == 1 ? 'curr' : '' ]">首页</router-link> 
       </div>
-      <div class="">
-        <router-link to="/approval" data-index="2" :class="['nav--item mr30', active == 2 ? 'curr' : '' ]">审批</router-link>
-        <router-link to="/personal" data-index="3" :class="['nav--item ', active == 3 ? 'curr' : '' ]">个人中心</router-link>
+      <div class="navs f16">
+        <router-link to="/approval" data-index="2" :class="['nav--item mr25', active == 2 ? 'curr' : '' ]">审批</router-link>
+        <router-link to="/personal" data-index="3" :class="['nav--item mr25', active == 3 ? 'curr' : '' ]">个人中心</router-link>
+        <div class="nav--item">角色<i class="iconfont icon-unfold f15"></i></div>
       </div>
     </nav>
   </section>
@@ -52,8 +53,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-  .mr30 {
-  	margin-right: 0.4rem;
+  .mr25 {
+  	margin-right: 0.333333rem;
   }
 
   .nav-cmp {
@@ -74,6 +75,12 @@ export default {
     height: 1.066667rem;
 
     padding: 0 .4rem;
+  }
+
+  .navs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .nav--item {

@@ -6,11 +6,11 @@
       <nav class="personal__tabs" >
         <div :class="['tab__item', tab === 1 ? 'active' : '']" @click="handleTabs(1)">
           <span class="f15 pr10">我的项目</span>
-          <span>(100)</span>
+          <span>({{ projects.length }})</span>
         </div>
         <div :class="['tab__item', tab === 2 ? 'active' : '']" @click="handleTabs(2)">
           <span class="f15 pr10">我的成果</span>
-          <span>(80)</span>
+          <span>({{ achievements.length }})</span>
         </div>
       </nav>
 
@@ -35,7 +35,7 @@
             </section>
           </router-link>
           <!-- 成果列表 -->
-          <li class="list__item" v-for="item in achievements" v-if="tab === 2">
+          <router-link tag="li" :to="'/project/'+item.productid" class="list__item" v-for="item in achievements" v-if="tab === 2">
             <section class="box__wrap">
               <div class="item__box">
                 <!-- 项目名称 -->
@@ -51,7 +51,7 @@
               </div>
             </section>
     
-          </li>
+          </router-link >
         </ul>
       </section>
 
@@ -356,7 +356,7 @@ export default {
     content: '';
     position: absolute;
     top: .293333rem;
-    left: -0.066667rem;
+    left: -0.093333rem;
     display: block;
     width: .133333rem;
     height: .133333rem;

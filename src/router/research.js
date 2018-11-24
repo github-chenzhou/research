@@ -31,6 +31,10 @@ export default new Router({
       path: '/approval',
       name: 'approval',
       component: () => import('@/components/research/approval.vue')
+    },{
+      path: '/approvaldetail/:id',
+      name: 'approvaldetail',
+      component: () => import('@/components/research/approval-detail.vue')
     },
   ]
 })
