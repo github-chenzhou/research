@@ -84,6 +84,10 @@ html * {
   margin-bottom: 0.266667rem;
 }
 
+.pl10 {
+  padding-left: .133333rem;
+}
+
 .pr10 {
   padding-right: .133333rem;
 }

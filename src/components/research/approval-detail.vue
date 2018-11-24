@@ -72,6 +72,14 @@
       <!-- 附件 -->
       <section class="approval__annex mt10 mb10">
         <h3 class="base--header f16">附件</h3>
+        <ul class="record__list" v-for="file in attachments">
+          <li class="list__item">
+            <div class="item__box">
+              <label class="box__left f16">{{ file.name }}</label>
+              <h3 class="box__right blue f16">查看</h3>
+            </div>
+          </li>
+        </ul>
       </section>
 
       <!-- 审批已经确认 -->
@@ -132,7 +140,8 @@ export default {
         'status': '已通过',
         'time': '2017-06-12 15:30',
         'opinion': 'XXXXXXXXXX',
-      }]
+      }],
+      attachments: [{ name: '立项批准文件或主管部门任务书、合同书', url: '', size: '' }]
     };
   },
   components: {},
