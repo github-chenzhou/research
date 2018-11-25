@@ -7,7 +7,7 @@ import router from '@/router/research'
 import store from './store'
 
 // 解决低版本数组接口兼容等ES6
-import "@babel/polyfill";
+// import "@babel/polyfill";
 
 import '@/registerServiceWorker'
 
