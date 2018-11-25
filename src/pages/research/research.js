@@ -6,6 +6,9 @@ import App from './research.vue'
 import router from '@/router/research'
 import store from './store'
 
+// 解决低版本数组接口兼容等ES6
+import "@babel/polyfill";
+
 import '@/registerServiceWorker'
 
 // 引入订阅发布解决路由子组件和父组件通信问题

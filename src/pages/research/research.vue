@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 导航 -->
-    <nav-cmp></nav-cmp>
+    <nav-cmp :user="user"></nav-cmp>
     <router-view />
   </div>
 </template>

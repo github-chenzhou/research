@@ -44,8 +44,12 @@ export default {
       // 绘制图表
       chart.setOption({
         title: { text: "科研2018年立项（按项目级别）", left: "center" },
-        // tooltip: {},
         xAxis: {
+          // X轴文字倾斜显示
+          axisLabel:{
+            interval: 0,
+            rotate:'30'
+          },
           data: [
             "采购部",
             "业务部",
@@ -97,6 +101,11 @@ export default {
               "研发部",
               "经理部"
             ],
+            // X轴文字倾斜显示
+            axisLabel:{
+              interval: 0,
+              rotate:'30'
+            },
             axisTick: {
               alignWithLabel: true
             }
@@ -143,6 +152,11 @@ export default {
               "研发部",
               "经理部"
             ],
+            // X轴文字倾斜显示
+            axisLabel:{
+              interval: 0,
+              rotate:'30'
+            },
             axisTick: {
               alignWithLabel: true
             }
@@ -172,7 +186,7 @@ export default {
     }
   },
   created() {
-    // this.renderCharts();
+    document.title = '科研系统首页';
   },
   mounted() {
     this.renderCharts();

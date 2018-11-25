@@ -133,6 +133,7 @@ export default {
   },
   created() {
     // this.getApprovalList();
+    document.title = '科研系统审批中心';
   },
   mounted() {
   },
@@ -169,7 +170,7 @@ export default {
   }
 
   .approval__item:nth-child(even) {
-    background: #e5e5e5;
+    // background: #e5e5e5;
   }
 
 </style>

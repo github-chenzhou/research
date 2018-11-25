@@ -17,7 +17,11 @@
       <div class="navs f16">
         <router-link to="/approval" data-index="2" :class="['nav--item mr25', active == 2 ? 'curr' : '' ]">审批</router-link>
         <router-link to="/personal" data-index="3" :class="['nav--item mr25', active == 3 ? 'curr' : '' ]">个人中心</router-link>
-        <div class="nav--item" @click="handleRoleVisible">角色<i class="iconfont icon-unfold f15"></i></div>
+        <div class="nav--item" @click="handleRoleVisible" v-if="user">
+          {{ user.personName }}
+          <i class="iconfont icon-fold f15" v-if="roleVisible"></i>
+          <i class="iconfont icon-unfold f15" v-else></i>
+        </div>
       </div>
     </nav>
     <!-- 角色切换 -->
@@ -25,7 +29,6 @@
       <ul class="role__list f16">
         <li class="">
           <div class="">
-            <i class="iconfont icon-suijidianming1 f15"></i>
             <span class="pl10">科研人员</span><span>(当前角色)</span>
           </div>
         </li>
@@ -43,9 +46,9 @@
 <script>
 export default {
   name: 'research-nav',
-  // props: {
-  //   active: 1
-  // },
+  props: {
+    user: null
+  },
   data() {
     return {
       active: 1,
@@ -87,6 +90,7 @@ export default {
     width: 100%;
     color: #9B9B9B;
     background: #282C2F;
+    background: #4F77AA;
   }
 
   .nav__wrap {
@@ -108,6 +112,7 @@ export default {
   .nav--item {
     line-height: 1.066667rem;
     color: #C8C8C8;
+    color: rgba(255,255,255,0.75);
     text-decoration: none;
   }
 

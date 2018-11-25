@@ -6,8 +6,8 @@
       <section class="approval__base">
         <header class="base--header f16">
           <h3 class="title">基本信息</h3>
-          <i class="iconfont icon-unfold f18" @click="handleFoldBase(false)" v-if="baseFold"></i>
-          <i class="iconfont icon-fold f18" @click="handleFoldBase(true)" v-else></i>
+          <i class="iconfont icon-unfold c9b f18" @click="handleFoldBase(false)" v-if="baseFold"></i>
+          <i class="iconfont icon-fold c9b f18" @click="handleFoldBase(true)" v-else></i>
         </header>
         <ul class="page__list" v-show="!baseFold">
           <li class="list__item">
@@ -36,8 +36,8 @@
       <section class="approval__record mt10 mb10">
         <header class="base--header f16">
           <h3 class="title">审批记录</h3>
-          <i class="iconfont icon-unfold f18" @click="handleFoldRecord(false)" v-if="recordFold"></i>
-          <i class="iconfont icon-fold f18" @click="handleFoldRecord(true)" v-else></i>
+          <i class="iconfont icon-unfold c9b f18" @click="handleFoldRecord(false)" v-if="recordFold"></i>
+          <i class="iconfont icon-fold c9b f18" @click="handleFoldRecord(true)" v-else></i>
         </header>
         <div v-show="!recordFold" >
           <ul class="record__list" v-for="record in records">
@@ -74,7 +74,7 @@
         <h3 class="base--header f16">附件</h3>
         <ul class="record__list" v-for="file in attachments">
           <li class="list__item">
-            <div class="item__box">
+            <div class="item__box" @click="handleViewFile">
               <label class="box__left f16">{{ file.name }}</label>
               <h3 class="box__right blue f16">查看</h3>
             </div>
@@ -182,13 +182,28 @@ export default {
      */
     handleFoldRecord(recordFold) {
       this.recordFold = recordFold;
+    },
+
+    handleViewFile() {
+      // 两种方案 一种直接打开 需要第三方应用
+      location.href = 'http://sfe.ykt.io/o_1ct479fitgdk1fd91p05jousl69.docx';
+
+      // 第二种微信api打开需要config签名之类
+      wx.previewFile({
+        // 需要预览文件的地址(必填，可以使用相对路径)
+        url: 'http://sfe.ykt.io/o_1ct479fitgdk1fd91p05jousl69.docx',
+        // 需要预览文件的文件名(不填的话取url的最后部分)
+        name: '立项批准文件或主管部门任务书、合同书',
+        // 需要预览文件的字节大小(必填)
+        size: 1048576
+      });
     }
   },
   created() {
     let id = this.$route.params.id;
   },
   mounted() {
-    document.title = '项目详情';
+    document.title = '审批详情';
   },
   beforeDestroy() {}
 };
