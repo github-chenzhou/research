@@ -16,12 +16,19 @@ export default new Vuex.Store({
     // 我的项目列表
     projects: [],
     // 我的成果列表
-    achievements: []
+    achievements: [],
+    // 审批列表
+    approvals: [],
+    approvalID: '',
   },
   getters: {
     mobile: state => state.mobile,
     user: state => state.user,
     role: state => state.role,
+    projects: state => state.projects,
+    achievements: state => state.achievements,
+    approvals: state => state.approvals,
+    approvalID: state => state.approvalID,
   },
   mutations: {
   	setMobile (state, mobile) {
@@ -38,6 +45,12 @@ export default new Vuex.Store({
     },
     setAchievements (state, achievements) {
       state.achievements = achievements
+    },
+    setApprovals (state, approvals) {
+      state.approvals = approvals
+    },
+    setApprovalID (state, approvalID) {
+      state.approvalID = approvalID
     },
   },
   actions: {

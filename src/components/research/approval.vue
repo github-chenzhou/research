@@ -125,10 +125,11 @@ export default {
     },
 
     /*
-      * @method 返回
+      * @method 格式化数据抽象数据mode
       * @param
       */
-    handleBack() {
+    formatData(data) {
+      
     }
   },
   created() {
