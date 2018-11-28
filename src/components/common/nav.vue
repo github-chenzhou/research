@@ -27,17 +27,19 @@
     <!-- 角色切换 -->
     <section class="role__modal" v-show="roleVisible">
       <ul class="role__list f16">
-        <li class="">
-          <div class="">
-            <span class="pl10">科研人员</span><span>(当前角色)</span>
+        <li class="" v-for="(role, index) in roles" >
+          <div :class="[ index ? 'blue': '' ]">
+            <i class="iconfont icon-suijidianming1 f15" v-if="index"></i>
+            <span class="pl10"><!-- 科研人员 -->{{ role.name }}</span>
+            <span v-if="index===0">(当前角色)</span>
           </div>
         </li>
-        <li class="">
+        <!--  <li class="">
           <div class="blue">
             <i class="iconfont icon-suijidianming1 f15"></i>
             <span class="pl10">技术中心科研主管</span>
           </div>
-        </li>
+        </li> -->
       </ul>
     </section>
   </section>
@@ -58,7 +60,7 @@ export default {
   },
   watch: {
     user(newVal, oldVal) {
-      this.setRoles(newVal);
+     newVal && this.setRoles(newVal);
     }
   },
   methods: {
@@ -66,8 +68,22 @@ export default {
      * @method 设置角色
      * @param
      */
-    setRoles(newVal) {
+    setRoles(user) {
+      let roles = [];
 
+      if(user.groups && user.groupNames) {
+        let ids = user.group.split(',');
+        let names = user.groupNames.split(',');
+
+        roles = ids.map((id, index)=>{
+          return { id, name: names[index] };
+        })
+
+        this.roles = roles;
+
+        // 设置当前角色
+
+      }
     },
 
     /*

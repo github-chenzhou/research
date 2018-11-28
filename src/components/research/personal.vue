@@ -24,11 +24,11 @@
                 <!-- 项目名称 -->
                 <h3 class="title f15">{{ item.title }}</h3>
                 <!-- 创建时间 -->
-                <p class="date f12">{{ item.content['[开始时间]'] }}</p>
+                <p class="date f12" v-if="item.content && item.content['[开始时间]']">{{ item.content['[开始时间]'] }}</p>
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
-                <h3 class="">{{ item.content['[负责人]'] }}</h3>
+                <h3 class="" v-if="item.content && item.content['[负责人]']">{{ item.content['[负责人]'] }}</h3>
                 <!-- 费用 -->
                 <p class="blue">{{ item.fee }}</p>
               </div>
@@ -45,9 +45,9 @@
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
-                <h3 class="">{{ item.content['[录入人]'] }}</h3>
+                <h3 class="" v-if="item.content && item.content['[录入人]']">{{ item.content['[录入人]'] }}</h3>
                 <!-- 类型 -->
-                <p class="">{{ item.content['[成果类型]'] }}</p>
+                <p class="" v-if="item.content && item.content['[成果类型]']">{{ item.content['[成果类型]'] }}</p>
               </div>
             </section>
     
@@ -354,7 +354,7 @@ export default {
     }
 
     .date {
-      min-width: 90px;
+      min-width: 135px;
       text-align: right;
     }
   }
