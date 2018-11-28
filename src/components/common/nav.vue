@@ -52,10 +52,24 @@ export default {
   data() {
     return {
       active: 1,
-      roleVisible: false
+      roleVisible: false,
+      roles: []
     };
   },
+  watch: {
+    user(newVal, oldVal) {
+      this.setRoles(newVal);
+    }
+  },
   methods: {
+    /*
+     * @method 设置角色
+     * @param
+     */
+    setRoles(newVal) {
+
+    },
+
     /*
       * @method tab切换
       * @param

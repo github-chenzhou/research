@@ -24,11 +24,11 @@
                 <!-- 项目名称 -->
                 <h3 class="title f15">{{ item.title }}</h3>
                 <!-- 创建时间 -->
-                <p class="date f12">{{ item.date }}</p>
+                <p class="date f12">{{ item.content['[开始时间]'] }}</p>
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
-                <h3 class="">{{ item.principal }}</h3>
+                <h3 class="">{{ item.content['[负责人]'] }}</h3>
                 <!-- 费用 -->
                 <p class="blue">{{ item.fee }}</p>
               </div>
@@ -45,9 +45,9 @@
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
-                <h3 class="">{{ item.principal }}</h3>
+                <h3 class="">{{ item.content['[录入人]'] }}</h3>
                 <!-- 类型 -->
-                <p class="">{{ item.type }}</p>
+                <p class="">{{ item.content['[成果类型]'] }}</p>
               </div>
             </section>
     
@@ -244,19 +244,21 @@ export default {
       } else {
         document.title = '我的成果';
       }
+
+      this.checkData(tab);
     },
 
     /*
      * @method 检测加载数据
      * @param phone
      */
-    checkData() {
-      if(!this.projects.length) {
-        this.getProjects();
+    checkData(tab) {
+      if(!this.projects.length && tab === 1) {
+        this.getProjects(this.tab);
       }
 
-      if(!this.achievements.length) {
-
+      if(!this.achievements.length && tab === 1) {
+        this.getProjects(this.tab);
       }
     },
 
@@ -264,14 +266,19 @@ export default {
      * @method 登陆
      * @param phone
      */
-    getProjects() {
+    getProjects(tab) {
       let url = api.GET_PROJECTS;
-      let params = { userid: '', actionType: 'login' };
+      // actionType=myproduct
+      let params = { actionType: tab === 1 ? 'myprject' : 'myproduct' };
 
       request.get(url, params).
       then((res)=>{
-        this.projects = res.dataList;
-        this.$store.commit('setProjects', this.projects);
+        if(tab === 1) {
+          this.projects = res.dataList;
+          this.$store.commit('setProjects', this.projects);
+        } else if(tab === 2) {
+          this.achievements = res.dataList;
+        }
       })
       
     },
