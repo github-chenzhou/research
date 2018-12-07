@@ -72,7 +72,7 @@ export default {
       let roles = [];
 
       if(user.groups && user.groupNames) {
-        let ids = user.group.split(',');
+        let ids = user.groups.split(',');
         let names = user.groupNames.split(',');
 
         roles = ids.map((id, index)=>{
