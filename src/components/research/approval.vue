@@ -12,9 +12,9 @@
           <!-- 负责人及审批类型 -->
           <div class="item__box pb10 f15">
             <!-- 负责人 -->
-            <h3 class="c333">{{ item.principal }}</h3>
+            <h3 class="c333">{{ item.chargerName }}</h3>
             <!-- 分类 -->
-            <p class="f14 c666">{{ item.category }}</p>
+            <p class="f14 c666">{{ item.moduleName }}</p>
           </div>
         </router-link>
       </ul>
@@ -34,65 +34,30 @@ export default {
       approvals: [{
         title: '混凝土试验－自密实混凝土性能的检测ISO1920Part13',
         date: '2017-05-13',
-        principal: '负责人/联系人',
-        category: '标准项目发布',
+        chargerName: '负责人/联系人',
+        moduleName: '标准项目发布',
         id: 1212
       }, {
         title: '标准测试180122',
         date: '2017-05-13',
-        principal: '负责人',
-        category: '经费认领',
+        chargerName: '负责人',
+        moduleName: '经费认领',
         id: 1212
       }, {
         title: '测试技术开发合同',
         date: '2017-07-13',
-        principal: '联系人',
-        category: '技术开发/技术转让合同',
+        chargerName: '联系人',
+        moduleName: '技术开发/技术转让合同',
       },{
         title: '混凝土试验－自密实混凝土性能',
         date: '2017-05-13',
-        principal: '负责人/联系人',
-        category: '标准项目发布',
+        chargerName: '负责人/联系人',
+        moduleName: '标准项目发布',
       },{
         title: '混凝土试验－自密实混凝土性能的检测ISO1920Part13',
         date: '2017-05-13',
-        principal: '负责人/联系人',
-        category: '标准项目发布',
-      }, {
-        title: '标准测试180122',
-        date: '2017-05-13',
-        principal: '负责人',
-        category: '经费认领',
-      }, {
-        title: '测试技术开发合同',
-        date: '2017-07-13',
-        principal: '联系人',
-        category: '技术开发/技术转让合同',
-      },{
-        title: '混凝土试验－自密实混凝土性能',
-        date: '2017-05-13',
-        principal: '负责人/联系人',
-        category: '标准项目发布',
-      },{
-        title: '混凝土试验－自密实混凝土性能的检测ISO1920Part13',
-        date: '2017-05-13',
-        principal: '负责人/联系人',
-        category: '标准项目发布',
-      }, {
-        title: '标准测试180122',
-        date: '2017-05-13',
-        principal: '负责人',
-        category: '经费认领',
-      }, {
-        title: '测试技术开发合同',
-        date: '2017-07-13',
-        principal: '联系人',
-        category: '技术开发/技术转让合同',
-      },{
-        title: '混凝土试验－自密实混凝土性能',
-        date: '2017-05-13',
-        principal: '负责人/联系人',
-        category: '标准项目发布',
+        chargerName: '负责人/联系人',
+        moduleName: '标准项目发布',
       }]
     };
   },
@@ -114,17 +79,17 @@ export default {
       * @param role
       */
     getApprovalList(role) {
-      let url = api.GET_APPROVALS;
-      let params = { userid: '', role };
+      let url = api.COMMON_ACTION;
+      let params = { actionType: 'todolist', groupId: role };
 
       request.get(url, params).
       then((res)=>{
-        this.projects = res.dataList;
-        // this.$store.commit('setProjects', this.projects);
+        this.approvals = res.dataList;
+        // this.$store.commit('setProjects', this.approvals);
       })
     },
 
-    /*
+    /**
       * @method 格式化数据抽象数据mode
       * @param
       */
@@ -133,10 +98,17 @@ export default {
     }
   },
   created() {
-    // this.getApprovalList();
+    // this.getApprovalList(this.role);
     document.title = '科研系统审批中心';
   },
   mounted() {
+    if(this.role) {
+      this.getApprovalList(this.role);
+    } else {
+      setTimeout(()=>{
+        this.getApprovalList(this.role);
+      }, 500)
+    }
   },
   beforeDestroy() {}
 };

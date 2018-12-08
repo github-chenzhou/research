@@ -78,6 +78,12 @@
           request.get(url, params).
           then((res)=>{
             this.$store.commit('setUser', res);
+
+            // 设置当前角色
+            if(res.groups) {
+              let ids = res.groups.split(',');
+              this.$store.commit('setRole', ids[0]);
+            }
           })
         }
       },

@@ -284,6 +284,9 @@ export default {
     },
   },
   created() {
+    this.projects = [];
+    this.achievements = [];
+    
     this.checkData();
     document.title = '个人中心';
   },
