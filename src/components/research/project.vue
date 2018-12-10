@@ -85,14 +85,6 @@ export default {
         // this.$store.commit('setProjects', this.projects);
       })
     },
-
-    /*
-     * @method 返回
-     * @param
-     */
-    handleBack() {
-      this.$router.back();
-    }
   },
   created() {
     let id = this.$route.params.id;

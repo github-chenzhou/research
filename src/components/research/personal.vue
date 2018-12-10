@@ -90,103 +90,9 @@ export default {
         'type': '研究报告',
         'principal': '负责人',
         'productid': 'yey234782348923418934234'
-      }, {
-        'content': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
-      },{
-        'content': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
       }],
       // 项目列表
       projects: [{
-        'content': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
-      }, {
-        'content': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
-      }, {
-        'content': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
-      },{
-        'content': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
-      },{
         'content': {
           '[获奖作者]': '金海娜', 
           '[所属科室]': '外国语学院', 
@@ -250,7 +156,6 @@ export default {
      */
     getProjects(tab) {
       let url = api.GET_PROJECTS;
-      // actionType=myproduct
       let params = { actionType: tab === 1 ? 'myprject' : 'myproduct' };
 
       request.get(url, params).
@@ -260,6 +165,7 @@ export default {
           this.$store.commit('setProjects', this.projects);
         } else if(tab === 2) {
           this.achievements = this.formatData(res.dataList);
+          this.$store.commit('setAchievements', this.achievements);
         }
       })
       
@@ -272,13 +178,25 @@ export default {
     formatData(list) {
       return list.map((item)=>{
         item.content = JSON.parse(item.content);
+
+        if(item.content) {
+          for(let key in item.content){
+            if(item.content[key] === 'null') {
+              item.content[key] = '';
+            }
+          }
+        }
+
         return item;
       });
     },
   },
   created() {
-    this.checkData(1);
-    this.checkData(2);
+    this.getProjects(1);
+
+    setTimeout(()=>{
+      this.getProjects(2);
+    }, 1000);
 
     document.title = '个人中心';
   },
