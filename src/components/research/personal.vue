@@ -40,12 +40,14 @@
               <div class="item__box">
                 <!-- 项目名称 -->
                 <h3 class="title f15">{{ item.title }}</h3>
-                <!-- 创建时间 -->
-                <p class="date f12">{{ item.date }}</p>
+                <!-- 完成日期 -->
+                <p class="date f12" v-if="item.content && item.content['[完成日期]']">{{ item.content['[完成日期]'] }}
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
                 <h3 class="" v-if="item.content && item.content['[录入人]']">{{ item.content['[录入人]'] }}</h3>
+                <!-- 成果成员 -->
+                <h3 class="" v-if="item.content && item.content['[成果成员]']">{{ item.content['[成果成员]'] }}</h3>
                 <!-- 类型 -->
                 <p class="" v-if="item.content && item.content['[成果类型]']">{{ item.content['[成果类型]'] }}</p>
               </div>
@@ -200,20 +202,6 @@ export default {
         'fee': '100万',
         'principal': '负责人',
         'productid': 'yey234782348923418934234'
-      },{
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
-      },{
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
       }],
     };
   },
@@ -268,20 +256,30 @@ export default {
       request.get(url, params).
       then((res)=>{
         if(tab === 1) {
-          this.projects = res.dataList;
+          this.projects = this.formatData(res.dataList);
           this.$store.commit('setProjects', this.projects);
         } else if(tab === 2) {
-          this.achievements = res.dataList;
+          this.achievements = this.formatData(res.dataList);
         }
       })
       
     },
+
+    /*
+     * @method 格式化数据
+     * @param 
+     */
+    formatData(list) {
+      return list.map((item)=>{
+        item.content = JSON.parse(item.content);
+        return item;
+      });
+    },
   },
   created() {
-    this.projects = [];
-    this.achievements = [];
-    
-    this.checkData();
+    this.checkData(1);
+    this.checkData(2);
+
     document.title = '个人中心';
   },
   mounted() {
