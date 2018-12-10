@@ -11,7 +11,8 @@ import axios from 'axios'
 
 const handleResponse = (res) => {
   // 支付接口使用的 status 判断
-  if (res.data.checkState === 'success' || res.data.errcode === 0) {
+  // if (res.data.checkState === 'success' || res.data.errcode === 0) {
+  if (res.data) {
     return Promise.resolve(res.data)
   } else {
     // 用户session丢失

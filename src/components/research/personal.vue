@@ -253,13 +253,7 @@ export default {
      * @param phone
      */
     checkData(tab) {
-      if(!this.projects.length && tab === 1) {
-        this.getProjects(this.tab);
-      }
-
-      if(!this.achievements.length && tab === 1) {
-        this.getProjects(this.tab);
-      }
+      this.getProjects(this.tab);
     },
 
     /*
