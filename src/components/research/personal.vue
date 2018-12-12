@@ -4,13 +4,13 @@
 
       <!-- 分类导航 项目 成果 -->
       <nav class="personal__tabs" >
-        <div :class="['tab__item', tab === 1 ? 'active' : '']" @click="handleTabs(1)">
-          <span class="f15 pr10">我的项目</span>
-          <span>({{ projects.length }})</span>
+        <div :class="['tab__item c333 f14', tab === 1 ? 'active' : '']" @click="handleTabs(1)">
+          <p>我的</p>
+          <p>项目<span class="f12" >({{ projects.length }})</span></p>
         </div>
-        <div :class="['tab__item', tab === 2 ? 'active' : '']" @click="handleTabs(2)">
-          <span class="f15 pr10">我的成果</span>
-          <span>({{ achievements.length }})</span>
+        <div :class="['tab__item c333 f14', tab === 2 ? 'active' : '']" @click="handleTabs(2)">
+          <p>我的</p>
+          <p>成果<span class="f12" >({{ projects.length }})</span></p>
         </div>
       </nav>
 
@@ -41,7 +41,7 @@
                 <!-- 项目名称 -->
                 <h3 class="title f15">{{ item.title }}</h3>
                 <!-- 完成日期 -->
-                <p class="date f12" v-if="item.content && item.content['[完成日期]']">{{ item.content['[完成日期]'] }}
+                <p class="date f12" v-if="item.content && item.content['[完成日期]']">{{ item.content['[完成日期]'] }}</p>
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
@@ -210,34 +210,50 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 
-  .page {
-
+  .page__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
   }
+
   .personal__tabs {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100vw;
-    height: 1rem;
-    background: #fff;
+    
+    flex-direction: column;
+    width: 20vw;
+    min-height: 5rem;
+
+    padding: .4rem 0;
+    // background: #fff;
   }
 
   .tab__item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     flex: 1;
-    line-height: 1rem;
-    border-bottom: 3px solid #fff;
+    width: 100%;
+    // line-height: 1rem;
+    // border-bottom: 3px solid #fff;
+    background: #e5e5e5;
   }
 
   .active {
-    border-bottom: 3px solid #639EF4;
+    // border-bottom: 3px solid #639EF4;
+    color: #5096F5;
+    background: #fff;
   }
 
   .list__wrap {
+    flex: 1;
     padding: .4rem .266667rem;
   }
 
   .page__list {
-    width: calc(100vw - .533333rem);
+    width: calc(80vw - .533333rem);
     min-height: 40vh;
     border-left: 1px solid rgba(93,161,244,.5);
     

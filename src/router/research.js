@@ -24,6 +24,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ '@/components/research/personal.vue')
     },
     {
+      path: '/roles',
+      name: 'roles',
+      component: () => import('@/components/research/roles.vue')
+    },
+    {
       path: '/project/:id',
       name: 'project',
       component: () => import('@/components/research/project.vue')

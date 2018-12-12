@@ -8,7 +8,7 @@
 
 <script>
   import {mapGetters} from 'vuex'
-  import navCmp from '@/components/common/nav.vue'
+  import navCmp from '@/components/common/navbar.vue'
   import request from '@/utils/request.js'
   import api from '@/utils/api.js'
   import { isSupported } from '@/utils/util.js'
