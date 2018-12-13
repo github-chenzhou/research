@@ -5,11 +5,9 @@
       <!-- 分类导航 项目 成果 -->
       <nav class="personal__tabs" >
         <div :class="['tab__item c333 f14', tab === 1 ? 'active' : '']" @click="handleTabs(1)">
-          <p>我的</p>
           <p>项目<span class="f12" >({{ projects.length }})</span></p>
         </div>
         <div :class="['tab__item c333 f14', tab === 2 ? 'active' : '']" @click="handleTabs(2)">
-          <p>我的</p>
           <p>成果<span class="f12" >({{ projects.length }})</span></p>
         </div>
       </nav>

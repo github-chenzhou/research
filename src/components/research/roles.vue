@@ -2,7 +2,7 @@
   <section class=" page">
     <!-- 角色列表 -->
     <ul class="role__list">
-      <li class="role" v-for="(item, index) in roles" >
+      <li class="role f16" v-for="(item, index) in roles" >
         <div :class="[ item.id === role ? 'blue': '' ]" @click="handleSetRole(item.id)">
           <i class="iconfont icon-suijidianming1 f15" v-if="item.id === role"></i>
           <span class="pl10">{{ item.name }}</span>
@@ -87,7 +87,7 @@ export default {
 <style scoped lang="scss">
 
   .page {
-    padding: 20px 15px;
+    padding: 0.266667rem 0.226667rem;
     // background: #fff;
   }
 
@@ -102,13 +102,18 @@ export default {
 
   .role {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
-    padding: 0.133333rem 0.133333rem;
-    width: 33.3%;
-    min-height: 1.6rem;
-    border-left: 1px solid #e5e5e5;
+    box-sizing: border-box;
+
+    padding: 0 0.453333rem;
+    // width: 33.3%;
+    width: 100%;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    text-align: left;
+    // border-left: 1px solid #e5e5e5;
     border-top: 1px solid #e5e5e5;
 
     background: #fff;
@@ -120,9 +125,9 @@ export default {
     }
   }
 
-  .role:nth-child(3n),
+  // .role:nth-child(3n),
   .role:last-child {
-    border-right: 1px solid #e5e5e5;
+    // border-right: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
   }
 
