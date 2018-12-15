@@ -54,7 +54,7 @@
           </li>
 
           <!-- 暂无数据 -->
-          <li class="" if="(tab === 1 && !projects.length) || (tab === 2 && !achievements.length)">
+          <li v-if="(tab === 1&&!projects.length)||(tab === 2&&!achievements.length)">
             <p class="empty f15 c333">暂无数据</p>
           </li>
         </ul>
@@ -94,9 +94,9 @@ export default {
       // tab: 1: 项目 2：成果
       tab: 1,
       // 成果列表
-      achievements: [],
+      // achievements: [],
       // 项目列表
-      projects: [],
+      // projects: [],
     };
   },
   components: {},

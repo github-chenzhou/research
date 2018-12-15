@@ -22,18 +22,25 @@
 export default {
   name: 'research-nav',
   props: {
-    user: null
+    user: {
+      type: Object,
+      default: null
+    },
+    active: {
+      type: Number,
+      default: 1
+    },
   },
   data() {
     return {
-      active: 1,
+      // active: 1,
       roleVisible: false,
       roles: []
     };
   },
   watch: {
     user(newVal, oldVal) {
-     newVal && this.setRoles(newVal);
+      newVal && this.setRoles(newVal);
     }
   },
   methods: {

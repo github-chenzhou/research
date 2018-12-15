@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 导航 -->
-    <nav-cmp :user="user"></nav-cmp>
+    <nav-cmp :user="user" :active="index" ></nav-cmp>
     <router-view />
   </div>
 </template>
@@ -20,7 +20,7 @@
     },
     data() {
       return {
-        index: 0
+        index: 1
       };
     },
     computed: {
@@ -29,7 +29,25 @@
         'user'
       ])
     },
-    watch: {},
+    watch: {
+      '$route' (to, from) {
+        if(to.name) {
+          switch (to.name) {
+            case 'personal':
+            case 'project':
+              this.index = 3;
+              break;
+            case 'roles':
+              this.index = 4;
+              break;
+            default:
+              this.index = 1;
+              break;
+          }
+        }
+        
+      }
+    },
     filters: {},
     mixins: [],
     methods: {
