@@ -15,7 +15,7 @@ export default new Router({
       name: 'approval',
       component: Approval
     },{
-      path: '/approvaldetail/:id',
+      path: '/approvaldetail//:module/:id',
       name: 'approvaldetail',
       component: () => import('@/components/research/approval-detail.vue')
     },

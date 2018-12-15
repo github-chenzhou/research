@@ -3,7 +3,8 @@
   	<div class="page__inner">
       <!-- 审批列表 -->
       <ul class="approval__list">
-        <router-link tag="li" :to="'/approvaldetail/'+item.id"  class="approval__item" v-for="item in approvals">
+        <!-- <router-link tag="li" :to="'/approvaldetail/'+item.id"  class="approval__item" v-for="item in approvals"> -->
+        <li class="approval__item" v-for="item in approvals" @click="handleLink(item)">
           <!-- 审批标题和日期 -->
           <div class="item__box">
             <h3 class="title blue f15">{{ item.title }}</h3>
@@ -16,7 +17,7 @@
             <!-- 分类 -->
             <p class="f14 c666">{{ item.moduleName }}</p>
           </div>
-        </router-link>
+        </li>
       </ul>
     </div>
   </section>
@@ -37,35 +38,13 @@ export default {
         chargerName: '负责人/联系人',
         moduleName: '标准项目发布',
         id: 1212
-      }, {
-        title: '标准测试180122',
-        date: '2017-05-13',
-        chargerName: '负责人',
-        moduleName: '经费认领',
-        id: 1212
-      }, {
-        title: '测试技术开发合同',
-        date: '2017-07-13',
-        chargerName: '联系人',
-        moduleName: '技术开发/技术转让合同',
-      },{
-        title: '混凝土试验－自密实混凝土性能',
-        date: '2017-05-13',
-        chargerName: '负责人/联系人',
-        moduleName: '标准项目发布',
-      },{
-        title: '混凝土试验－自密实混凝土性能的检测ISO1920Part13',
-        date: '2017-05-13',
-        chargerName: '负责人/联系人',
-        moduleName: '标准项目发布',
       }]
     };
   },
   components: {},
   computed: {
     ...mapGetters([
-      'mobile',
-      'user',
+      'approvals',
       'role'
     ])
   },
@@ -85,7 +64,8 @@ export default {
       request.get(url, params).
       then((res)=>{
         this.approvals = res.dataList;
-        // this.$store.commit('setProjects', this.approvals);
+        this.$store.commit('setApprovals', this.approvals);
+        window.approvals = this.approvals;
       })
     },
 
@@ -95,10 +75,24 @@ export default {
       */
     formatData(data) {
       
-    }
+    },
+
+    /*
+     * @method 详情链接
+     * @param 
+     */
+    handleLink(info) {
+      this.$router.push({ 
+        name: 'approvaldetail', 
+        params: { module: info.moduleId, id: info.productId }
+      })
+    },
   },
   created() {
-    // this.getApprovalList(this.role);
+    if(window.approvals) {
+      this.approvals = window.approvals;
+    }
+
     document.title = '科研系统审批中心';
   },
   mounted() {
@@ -107,7 +101,7 @@ export default {
     } else {
       setTimeout(()=>{
         this.getApprovalList(this.role);
-      }, 500)
+      }, 1000)
     }
   },
   beforeDestroy() {}
@@ -118,7 +112,7 @@ export default {
 <style scoped lang="scss">
 
   .approval__item {
-    margin-bottom: 0.333333rem;
+    margin-top: 0.333333rem;
     padding: 0.2rem 0.226667rem;
     line-height: .8rem;
     background: #fff;

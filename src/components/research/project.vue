@@ -6,7 +6,7 @@
         <li class="list__item">
           <div class="item__box">
             <label class="box__left f16">项目编号</label>
-            <h3 class="box__right c333 f16">我的立项测试数据</h3>
+            <h3 class="box__right c333 f16"><!-- 我的立项测试数据 -->{{ type === 1 ? '我的项目': '我的成果' }}</h3>
           </div>
         </li>
         <li class="list__item">
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       id: 0,
-      project: {
+      project2: {
         'content': {
           '[获奖作者]': '金海娜', 
           '[所属科室]': '外国语学院', 
@@ -61,13 +61,12 @@ export default {
   components: {},
   computed: {
     ...mapGetters([
-      'mobile',
-      'user'
+      'user',
+      'project',
     ])
   },
   watch: {},
   filters: {
-    formatTime(time) {}
   },
   mixins: [],
   methods: {
@@ -82,12 +81,12 @@ export default {
       request.get(url, params).
       then((res)=>{
         this.project = res;
-        // this.$store.commit('setProjects', this.projects);
       })
     },
   },
   created() {
     let id = this.$route.params.id;
+    let type = +this.$route.params.type;
   },
   mounted() {
     document.title = '项目详情';

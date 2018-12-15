@@ -15,6 +15,7 @@ export default new Vuex.Store({
   	role: null,
     // 我的项目列表
     projects: [],
+    project: null,
     // 我的成果列表
     achievements: [],
     // 审批列表
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     user: state => state.user,
     role: state => state.role,
     projects: state => state.projects,
+    project: state => state.project,
     achievements: state => state.achievements,
     approvals: state => state.approvals,
     approvalID: state => state.approvalID,
@@ -42,6 +44,9 @@ export default new Vuex.Store({
     },
     setProjects (state, projects) {
       state.projects = projects
+    },
+    setProject (state, project) {
+      state.project = project
     },
     setAchievements (state, achievements) {
       state.achievements = achievements

@@ -29,7 +29,7 @@ export default new Router({
       component: () => import('@/components/research/roles.vue')
     },
     {
-      path: '/project/:id',
+      path: '/project/:type/:id',
       name: 'project',
       component: () => import('@/components/research/project.vue')
     },
@@ -38,7 +38,7 @@ export default new Router({
       name: 'approval',
       component: () => import('@/components/research/approval.vue')
     },{
-      path: '/approvaldetail/:id',
+      path: '/approvaldetail//:module/:id',
       name: 'approvaldetail',
       component: () => import('@/components/research/approval-detail.vue')
     },

@@ -8,7 +8,7 @@
           <p>项目<span class="f12" >({{ projects.length }})</span></p>
         </div>
         <div :class="['tab__item c333 f14', tab === 2 ? 'active' : '']" @click="handleTabs(2)">
-          <p>成果<span class="f12" >({{ projects.length }})</span></p>
+          <p>成果<span class="f12" >({{ achievements.length }})</span></p>
         </div>
       </nav>
 
@@ -16,7 +16,8 @@
       <section class="list__wrap">
         <ul class="page__list">
           <!-- 项目列表 -->
-          <router-link tag="li" :to="'/project/'+item.productid" class="list__item" v-for="item in projects" v-if="tab === 1">
+          <!-- <router-link tag="li" :to="'/project/'+item.productid" class="list__item" v-for="item in projects" v-if="tab === 1"> -->
+          <li class="list__item" v-for="item in projects" v-if="tab === 1" @click="handleLinks(tab, item)">
             <section class="box__wrap">
               <div class="item__box">
                 <!-- 项目名称 -->
@@ -31,9 +32,9 @@
                 <p class="blue">{{ item.fee }}</p>
               </div>
             </section>
-          </router-link>
+          </li>
           <!-- 成果列表 -->
-          <router-link tag="li" :to="'/project/'+item.productid" class="list__item" v-for="item in achievements" v-if="tab === 2">
+          <li class="list__item" v-for="item in achievements" v-if="tab === 2" @click="handleLinks(tab, item)">
             <section class="box__wrap">
               <div class="item__box">
                 <!-- 项目名称 -->
@@ -50,8 +51,7 @@
                 <p class="" v-if="item.content && item.content['[成果类型]']">{{ item.content['[成果类型]'] }}</p>
               </div>
             </section>
-    
-          </router-link >
+          </li>
         </ul>
       </section>
 
@@ -112,7 +112,6 @@ export default {
   components: {},
   computed: {
     ...mapGetters([
-      'mobile',
       'user',
       'projects',
       'achievements',
@@ -138,6 +137,8 @@ export default {
       }
 
       this.checkData(tab);
+
+      window.tab = tab;
     },
 
     /*
@@ -188,6 +189,15 @@ export default {
         return item;
       });
     },
+
+    /*
+     * @method 详情链接
+     * @param 
+     */
+    handleLinks(tab, info) {
+      this.$store.commit('setProject', info);
+      this.$router.push({ name: 'project', params: { type: tab, id: info.productid }})
+    },
   },
   created() {
     this.getProjects(1);
@@ -197,6 +207,7 @@ export default {
     }, 1000);
 
     document.title = '个人中心';
+    this.handleTabs(window.tab || 1);
   },
   mounted() {
 

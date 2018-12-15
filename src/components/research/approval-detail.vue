@@ -6,24 +6,26 @@
       <section class="approval__base">
         <header class="base--header f16">
           <h3 class="title">基本信息</h3>
-          <i class="iconfont icon-unfold c9b f18" @click="handleFoldBase(false)" v-if="baseFold"></i>
-          <i class="iconfont icon-fold c9b f18" @click="handleFoldBase(true)" v-else></i>
+          <i class="iconfont icon-unfold c9b f18" @click="handleFold(false, 'baseFold')" v-if="baseFold"></i>
+          <i class="iconfont icon-fold c9b f18" @click="handleFold(true, 'baseFold')" v-else></i>
         </header>
         <ul class="page__list" v-show="!baseFold">
-          <li class="list__item">
-            <div class="item__box">
-              <label class="box__left f16">项目编号</label>
-              <h3 class="box__right c333 f16">我的立项测试数据</h3>
-            </div>
-          </li>
-          <li class="list__item">
+          <!-- <li class="list__item">
             <div class="item__box">
               <label class="box__left f16">项目名称</label>
               <h3 class="box__right c333 f16">{{ project.title }}</h3>
             </div>
-          </li>
+          </li>  -->
           <!-- 项目属性 -->
-          <li class="list__item" v-for="(value, key) in project.content">
+          <li class="list__item" v-for="(value, key) in project.baseInfo">
+            <div class="item__box">
+              <label class="box__left f16">{{ key }}</label>
+              <h3 class="box__right c333 f16">{{ value }}</h3>
+            </div>
+          </li>
+
+          <!-- 详细信息 -->
+          <li class="list__item" v-for="(value, key) in project.detailInfo">
             <div class="item__box">
               <label class="box__left f16">{{ key }}</label>
               <h3 class="box__right c333 f16">{{ value }}</h3>
@@ -32,12 +34,49 @@
         </ul>
       </section>
 
+      <!-- 作者信息 -->
+      <section class="approval__record mt10 mb10" v-if="project.authorInfo">
+        <header class="base--header f16">
+          <h3 class="title">作者信息</h3>
+          <i class="iconfont icon-unfold c9b f18" @click="handleFold(false, 'authorFold')" v-if="authorFold"></i>
+          <i class="iconfont icon-fold c9b f18" @click="handleFold(true, 'authorFold')" v-else></i>
+        </header>
+        <div v-show="!authorFold" >
+          <ul class="record__list" v-for="author in project.authorInfo">
+            <li class="list__item">
+              <div class="item__box">
+                <label class="box__left f16">姓名</label>
+                <h3 class="box__right c333 f16">{{ author.authorName }}</h3>
+              </div>
+            </li>
+            <li class="list__item">
+              <div class="item__box">
+                <label class="box__left f16">类型</label>
+                <h3 class="box__right c333 f16">{{ author.authorType  }}</h3>
+              </div>
+            </li>
+            <li class="list__item">
+              <div class="item__box">
+                <label class="box__left f16">机构</label>
+                <h3 class="box__right c333 f16">{{ author.authorUnit }}</h3>
+              </div>
+            </li>
+            <li class="list__item">
+              <div class="item__box">
+                <label class="box__left f16">学历/职称</label>
+                <h3 class="box__right c333 f16">{{ author.eduLevelId || author.titleId }}</h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
       <!-- 审批记录 -->
       <section class="approval__record mt10 mb10">
         <header class="base--header f16">
           <h3 class="title">审批记录</h3>
-          <i class="iconfont icon-unfold c9b f18" @click="handleFoldRecord(false)" v-if="recordFold"></i>
-          <i class="iconfont icon-fold c9b f18" @click="handleFoldRecord(true)" v-else></i>
+          <i class="iconfont icon-unfold c9b f18" @click="handleFold(false, 'recordFold')" v-if="recordFold"></i>
+          <i class="iconfont icon-fold c9b f18" @click="handleFold(true, 'recordFold')" v-else></i>
         </header>
         <div v-show="!recordFold" >
           <ul class="record__list" v-for="record in records">
@@ -105,6 +144,8 @@ import {mapGetters} from 'vuex'
 import request from '@/utils/request.js'
 import api from '@/utils/api.js'
 
+import approvalMixin from '@/components/common/approval-mixin.js'
+
 
 export default {
   name: "research-project",
@@ -113,8 +154,9 @@ export default {
       id: 0,
       baseFold: false,
       recordFold: false,
+      authorFold: false,
       project: {
-        'content': {
+        'baseInfo': {
           '[获奖作者]': '金海娜', 
           '[所属科室]': '外国语学院', 
           '[获奖级别]': '其它', 
@@ -155,33 +197,75 @@ export default {
   filters: {
     formatTime(time) {}
   },
-  mixins: [],
+  mixins: [approvalMixin],
   methods: {
     /*
      * @method 加载数据
      * @param
      */
-    getData(id) {
-      let url = api.GET_PROJECT;
-      let params = { userid: '', actionType: 'login' };
+    getData(id, moduleId) {
+      let url = api.COMMON_ACTION;
+      let params = { actionType: 'todolist', moduleId: this.moduleID, productId: this.ID };
 
       request.get(url, params).
       then((res)=>{
-        this.project = res;
-        // this.$store.commit('setProjects', this.projects);
+        console.info(res);
+        res = this.getValue(res);
+
+        if(res && res.content) {
+          let content = res.content;
+          this.formatData(content);
+
+          this.setModule(this.moduleID, content);
+        }
+
       })
     },
 
-    handleFoldBase(baseFold) {
-      this.baseFold = baseFold;
+    /*
+     * @method JSON格式不合理
+     * @param 
+     */
+    getValue(jsonStr) {
+      return new Function("return " + jsonStr)()
+    },
+    
+    /*
+     * @method 基础数据格式化
+     * @param 
+     */
+    formatData(data) {
+      // 基本信息
+      let baseInfo = JSON.parse(data.baseInfo);
+      if(baseInfo) {
+        for(let key in baseInfo){
+          if(baseInfo[key] === 'null') {
+            baseInfo[key] = '';
+          }
+        }
+
+        this.project.baseInfo = baseInfo;
+      }
+
+      if(data.detailInfo) {
+        let detailInfo = JSON.parse(data.detailInfo);
+        this.project.detailInfo = detailInfo;
+      }
+
+      // 作者信息
+      if(data.authorInfo) {
+        this.project.authorInfo = data.authorInfo;
+      }
+
+      console.info(this.project);
     },
 
     /*
-     * @method 审批记录收起
+     * @method 收起
      * @param
      */
-    handleFoldRecord(recordFold) {
-      this.recordFold = recordFold;
+    handleFold(isFold, key) {
+      this[key] = isFold;
     },
 
     handleViewFile() {
@@ -200,7 +284,10 @@ export default {
     }
   },
   created() {
-    let id = this.$route.params.id;
+    this.ID = this.$route.params.id;
+    this.moduleID = this.$route.params.module;
+
+    this.getData(this.ID, this.moduleID);
   },
   mounted() {
     document.title = '审批详情';
@@ -258,6 +345,7 @@ export default {
   }
 
   .box__right {
+    flex: 1;
     text-align: right;
   }
 

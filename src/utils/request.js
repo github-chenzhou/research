@@ -15,12 +15,6 @@ const handleResponse = (res) => {
   if (res.data) {
     return Promise.resolve(res.data)
   } else {
-    // 用户session丢失
-    if(res.data.op === 'redirect') {
-     
-      return;
-    }
-
     // 没有权限
     // if(res.data.status_code === 1 || res.data.status_code === 2 || res.data.status_code === 4) {
     //   location.href = '/v/index/course/normalcourse/error/' + res.data.status_code;
