@@ -11,7 +11,7 @@
   <section id="nav" class="nav-cmp">
   	<nav class="nav__wrap f14" @click="handleTab">
       <router-link to="/" data-index="1" :class="['nav--item ', active == 1 ? 'curr' : '' ]">统计分析</router-link>
-      <router-link to="/approval" data-index="2" :class="['nav--item ', active == 2 ? 'curr' : '' ]">审批</router-link>
+      <!-- <router-link to="/approval" data-index="2" :class="['nav--item ', active == 2 ? 'curr' : '' ]">审批</router-link> -->
       <router-link to="/personal" data-index="3" :class="['nav--item', active == 3 ? 'curr' : '' ]">个人中心</router-link>
       <router-link to="/roles" data-index="4" :class="['nav--item', active == 4 ? 'curr' : '' ]" @click="handleRoleVisible">角色切换</router-link>
     </nav>
