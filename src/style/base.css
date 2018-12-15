@@ -96,6 +96,10 @@ html * {
   padding-bottom: .133333rem;
 }
 
+.w100 {
+  width: 100vw;
+}
+
 
 /*-----------------------------*\
     $ 基本字体大小
@@ -319,4 +323,13 @@ html * {
 .page__inner {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+}
+
+.empty {
+  margin-top: 0.266667rem;
+  padding: 0.226667rem;
+  text-align: center;
+  line-height: 1rem;
+  background: #fff;
+  border-radius: .053333rem;
 }

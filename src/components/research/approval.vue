@@ -18,6 +18,11 @@
             <p class="f14 c666">{{ item.moduleName }}</p>
           </div>
         </li>
+
+        <!-- 暂无数据 -->
+        <li class="empty w100" if="!approvals.length">
+          <p class="f15 c333">暂无数据</p>
+        </li>
       </ul>
     </div>
   </section>
@@ -32,13 +37,7 @@ export default {
   name: "research-approval",
   data() {
     return {
-      approvals: [{
-        title: '混凝土试验－自密实混凝土性能的检测ISO1920Part13',
-        date: '2017-05-13',
-        chargerName: '负责人/联系人',
-        moduleName: '标准项目发布',
-        id: 1212
-      }]
+      approvals: []
     };
   },
   components: {},
