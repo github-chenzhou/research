@@ -186,7 +186,7 @@ export default {
      */
     handleLinks(tab, info) {
       this.$store.commit('setProject', info);
-      this.$router.push({ name: 'project', params: { type: tab, id: info.productid }})
+      this.$router.push({ name: 'project', params: { type: tab, id: info.productId }})
     },
   },
   created() {

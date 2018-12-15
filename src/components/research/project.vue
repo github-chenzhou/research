@@ -87,6 +87,8 @@ export default {
   created() {
     let id = this.$route.params.id;
     let type = +this.$route.params.type;
+
+    console.info(id, type);
   },
   mounted() {
     document.title = '项目详情';
