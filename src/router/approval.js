@@ -5,7 +5,7 @@ import Approval from '@/components/research/approval.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'history', 
   // mode: 'hash',
   // base: process.env.BASE_URL,
   base: '/approval',
@@ -15,9 +15,14 @@ export default new Router({
       name: 'approval',
       component: Approval
     },{
-      path: '/approvaldetail//:module/:id',
+      path: '/approvaldetail/:module/:id',
       name: 'approvaldetail',
       component: () => import('@/components/research/approval-detail.vue')
+    },
+    {
+      path: '/roles',
+      name: 'roles',
+      component: () => import('@/components/research/roles.vue')
     },
   ]
 })

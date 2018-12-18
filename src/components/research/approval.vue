@@ -95,6 +95,8 @@ export default {
     document.title = '科研系统审批中心';
   },
   mounted() {
+    console.log(this.role);
+    
     if(this.role) {
       this.getApprovalList(this.role);
     } else {

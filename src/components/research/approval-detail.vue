@@ -210,7 +210,9 @@ export default {
       request.get(url, params).
       then((res)=>{
         console.info(res);
-        res = this.getValue(res);
+        if(typeof res === 'string') {
+          res = this.getValue(res);
+        }
 
         if(res && res.content) {
           let content = res.content;
@@ -236,7 +238,13 @@ export default {
      */
     formatData(data) {
       // 基本信息
-      let baseInfo = JSON.parse(data.baseInfo);
+      let baseInfo = null;
+      if(typeof data.baseInfo === 'string') {
+        baseInfo = this.getValue(data.baseInfo);
+      } else {
+        baseInfo = JSON.parse(data.baseInfo);
+      }
+
       if(baseInfo) {
         for(let key in baseInfo){
           if(baseInfo[key] === 'null') {

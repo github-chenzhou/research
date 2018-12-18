@@ -1,7 +1,7 @@
 /*
  * @page：科研移动版导航
  * @author: chenzhou
- * @update: 2018.11.18
+ * @update: 2018.12.12
  * @desc 
  *
  */
@@ -9,39 +9,10 @@
 
 <template>
   <section id="nav" class="nav-cmp">
-  	<nav class="nav__wrap f14" @click="handleTab">
-  		<div class="f16">
-  			<!-- <i class="iconfont icon-logo f18"></i> -->
-        <router-link to="/" data-index="1" :class="['nav--item ', active == 1 ? 'curr' : '' ]">首页</router-link> 
-      </div>
-      <div class="navs f16">
-        <router-link to="/approval" data-index="2" :class="['nav--item mr25', active == 2 ? 'curr' : '' ]">审批</router-link>
-        <router-link to="/personal" data-index="3" :class="['nav--item mr25', active == 3 ? 'curr' : '' ]">个人中心</router-link>
-        <div class="nav--item" @click="handleRoleVisible" v-if="user">
-          {{ user.personName }}
-          <i class="iconfont icon-fold f15" v-if="roleVisible"></i>
-          <i class="iconfont icon-unfold f15" v-else></i>
-        </div>
-      </div>
+    <nav class="nav__wrap f14" @click="handleTab" >
+      <router-link to="/" data-index="1" :class="['nav--item ', active == 1 ? 'curr' : '' ]">审批中心</router-link>
+      <router-link to="/roles" data-index="2" :class="['nav--item', active == 2 ? 'curr' : '' ]" >角色切换</router-link>
     </nav>
-    <!-- 角色切换 -->
-    <section class="role__modal" v-show="roleVisible">
-      <ul class="role__list f16">
-        <li class="" v-for="(role, index) in roles" >
-          <div :class="[ index ? 'blue': '' ]">
-            <i class="iconfont icon-suijidianming1 f15" v-if="index"></i>
-            <span class="pl10"><!-- 科研人员 -->{{ role.name }}</span>
-            <span v-if="index===0">(当前角色)</span>
-          </div>
-        </li>
-        <!--  <li class="">
-          <div class="blue">
-            <i class="iconfont icon-suijidianming1 f15"></i>
-            <span class="pl10">技术中心科研主管</span>
-          </div>
-        </li> -->
-      </ul>
-    </section>
   </section>
 </template>
 
@@ -49,18 +20,24 @@
 export default {
   name: 'research-nav',
   props: {
-    user: null
+    user: {
+      type: Object,
+      default: null
+    },
+    active: {
+      type: Number,
+      default: 1
+    },
   },
   data() {
     return {
-      active: 1,
-      roleVisible: false,
+      // active: 1,
       roles: []
     };
   },
   watch: {
     user(newVal, oldVal) {
-     newVal && this.setRoles(newVal);
+      newVal && this.setRoles(newVal);
     }
   },
   methods: {
@@ -92,15 +69,11 @@ export default {
       */
     handleTab(evt) {
       let target = evt.target;
-      let index = target.dataset.index;
+      let index = +target.dataset.index;
 
       if(index) {
         this.active = index;
       }
-    },
-
-    handleRoleVisible() {
-      this.roleVisible = !this.roleVisible;
     }
   },
 }
@@ -109,7 +82,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
   .mr25 {
-  	margin-right: 0.333333rem;
+    margin-right: 0.333333rem;
   }
 
   .nav-cmp {
@@ -119,18 +92,19 @@ export default {
     top: 0;
     width: 100%;
     color: #9B9B9B;
-    background: #282C2F;
-    background: #4F77AA;
+    background-color: #fff;
   }
 
   .nav__wrap {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    // justify-content: space-between;
     width: 100vw;
     height: 1.066667rem;
 
     padding: 0 0.266667rem;
+
+    text-align: center;
   }
 
   .navs {
@@ -140,10 +114,14 @@ export default {
   }
 
   .nav--item {
+    flex: 1;
     line-height: 1.066667rem;
     color: #C8C8C8;
     color: rgba(255,255,255,0.75);
     text-decoration: none;
+
+    color: #666;
+   
   }
 
   .nav--item:hover {
@@ -151,11 +129,13 @@ export default {
   }
 
   .curr {
-    color: #fff;
+    color: #26a2ff;
+    border-bottom: 3px solid #26a2ff;
+    margin-bottom: -3px;
   }
 
   .icon-logo {
-  	vertical-align: -0.066667rem;
+    vertical-align: -0.066667rem;
     padding-right: .133333rem;
   }
 

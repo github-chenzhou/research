@@ -1,14 +1,15 @@
 <template>
   <div id="app">
     <!-- 导航 -->
-    <!-- <nav-cmp :user="user"></nav-cmp> -->
+    <nav-cmp :user="user" :active="index" ></nav-cmp>
     <router-view />
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex'
-  // import navCmp from '@/components/common/nav.vue'
+  import navCmp from '@/components/common/nav.vue'
+  // import navCmp from '@/components/common/navbar.vue'
   import request from '@/utils/request.js'
   import api from '@/utils/api.js'
   import { isSupported } from '@/utils/util.js'
@@ -16,11 +17,11 @@
   export default {
     name: 'approval-center-page',
     components: {
-      // navCmp
+      navCmp
     },
     data() {
       return {
-        index: 0
+        index: 1
       };
     },
     computed: {
@@ -29,7 +30,25 @@
         'user'
       ])
     },
-    watch: {},
+    watch: {
+      '$route' (to, from) {
+        if(to.name) {
+          switch (to.name) {
+            case 'approval':
+            case 'approvaldetail':
+              this.index = 1;
+              break;
+            case 'roles':
+              this.index = 2;
+              break;
+            default:
+              this.index = 1;
+              break;
+          }
+        }
+        
+      }
+    },
     filters: {},
     mixins: [],
     methods: {
@@ -122,7 +141,7 @@
     /* position: fixed; */
    /*  left: 0;
     width: 100vw; */
-    top: 0;
+    /* top: 0; */
     height: 100vh;
   }
 
