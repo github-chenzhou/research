@@ -66,13 +66,16 @@ export default {
       this.role = id;
       this.$store.commit('setRole', id);
 
-      // this.$router.back();
-      this.$router.push({ path: '/'});
-      path
+      if(this.form === 'approval') {
+        this.$router.push({ path: '/'});
+      } else {
+        this.$router.back();
+      }  
     }
   },
   created() {
     document.title = '科研系统切换角色';
+    this.form = this.$route.query.form;
   },
   mounted() {
     if(this.user) {

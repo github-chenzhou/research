@@ -94,9 +94,9 @@ export default {
       // tab: 1: 项目 2：成果
       tab: 1,
       // 成果列表
-      // achievements: [],
+      achievements: [],
       // 项目列表
-      // projects: [],
+      projects: [],
     };
   },
   components: {},
