@@ -66,7 +66,9 @@ export default {
       this.role = id;
       this.$store.commit('setRole', id);
 
-      this.$router.back();
+      // this.$router.back();
+      this.$router.push({ path: '/'});
+      path
     }
   },
   created() {
