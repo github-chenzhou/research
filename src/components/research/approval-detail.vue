@@ -10,12 +10,6 @@
           <i class="iconfont icon-fold c9b f18" @click="handleFold(true, 'baseFold')" v-else></i>
         </header>
         <ul class="page__list" v-show="!baseFold">
-          <!-- <li class="list__item">
-            <div class="item__box">
-              <label class="box__left f16">项目名称</label>
-              <h3 class="box__right c333 f16">{{ project.title }}</h3>
-            </div>
-          </li>  -->
           <!-- 项目属性 -->
           <li class="list__item" v-for="(value, key) in project.baseInfo">
             <div class="item__box">
@@ -46,25 +40,125 @@
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">姓名</label>
-                <h3 class="box__right c333 f16">{{ author.authorName }}</h3>
+                <h3 class="box__right c333 f16">{{ author.authorName || author.personName }}</h3>
               </div>
             </li>
-            <li class="list__item">
+            <li class="list__item" v-if="author.authorType">
               <div class="item__box">
                 <label class="box__left f16">类型</label>
-                <h3 class="box__right c333 f16">{{ author.authorType  }}</h3>
+                <h3 class="box__right c333 f16">{{ author.authorType }}</h3>
+              </div>
+            </li>
+            <li class="list__item" v-if="author.memberType">
+              <div class="item__box">
+                <label class="box__left f16">成员类型</label>
+                <h3 class="box__right c333 f16">{{ author.memberType }}</h3>
               </div>
             </li>
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">机构</label>
-                <h3 class="box__right c333 f16">{{ author.authorUnit }}</h3>
+                <h3 class="box__right c333 f16">{{ author.authorUnit || author.unitName }}</h3>
               </div>
             </li>
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">学历/职称</label>
-                <h3 class="box__right c333 f16">{{ author.eduLevelId || author.titleId }}</h3>
+                <h3 class="box__right c333 f16">{{ author.eduLevelId || author.titleId || author.eduDegreeId }}</h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 合同信息 -->
+      <section class="approval__base mt10 mb10" v-if="project.contract">
+        <header class="base--header f16">
+          <h3 class="title">合同信息</h3>
+        </header>
+        <ul class="page__list">
+          <li class="list__item" v-for="(value, key) in project.contract">
+            <div class="item__box">
+              <label class="box__left f16">{{ key }}</label>
+              <h3 class="box__right c333 f16">{{ value }}</h3>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 预算明细 -->
+      <section class="approval__record mt10 mb10" v-if="project.budgetInfo">
+        <header class="base--header f16">
+          <h3 class="title">预算明细</h3>
+        </header>
+        <div >
+          <ul class="record__list" v-for="budget in project.budgetInfo">
+            <li class="list__item">
+              <div class="item__box">
+                <label class="box__left f16">编号</label>
+                <h3 class="box__right c333 f16">{{ budget.orderId }}</h3>
+              </div>
+            </li>
+            <li class="list__item" v-if="budget.subjectFee">
+              <div class="item__box">
+                <label class="box__left f16">预算经费（万元）</label>
+                <h3 class="box__right c333 f16">{{ budget.subjectFee }}</h3>
+              </div>
+            </li>
+            <li class="list__item">
+              <div class="item__box">
+                <label class="box__left f16">预算科目</label>
+                <h3 class="box__right c333 f16">{{ budget.subjectName }}</h3>
+              </div>
+            </li>
+            <li class="list__item" v-if="budget.lyzxFee">
+              <div class="item__box">
+                <label class="box__left f16">留院-专项经费</label>
+                <h3 class="box__right c333 f16">{{ budget.lyzxFee }}</h3>
+              </div>
+            </li>
+            <li class="list__item" v-if="budget.lyselfProvideFee">
+              <div class="item__box">
+                <label class="box__left f16">留院-自筹经费</label>
+                <h3 class="box__right c333 f16">{{ budget.lyselfProvideFee }}</h3>
+              </div>
+            </li>
+            <li class="list__item" v-if="budget.lyotherFee">
+              <div class="item__box">
+                <label class="box__left f16">留院-其他经费</label>
+                <h3 class="box__right c333 f16">{{ budget.lyotherFee }}</h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 审批样式模板 -->
+      <modules :project="project"></modules>
+
+      <!-- 专利权人信息 -->
+      <section class="approval__record mt10 mb10" v-if="project.patenteeInfo">
+        <header class="base--header f16">
+          <h3 class="title">专利权人信息</h3>
+        </header>
+        <div >
+          <ul class="record__list" v-for="patentee in project.patenteeInfo">
+            <li class="list__item">
+              <div class="item__box" v-if="patentee.patenteeName">
+                <label class="box__left f16">专利权人名</label>
+                <h3 class="box__right c333 f16">{{ patentee.patenteeName }}</h3>
+              </div>
+            </li>
+            <li class="list__item" v-if="patentee.patenteeType">
+              <div class="item__box">
+                <label class="box__left f16">专利权人类型</label>
+                <h3 class="box__right c333 f16">{{ patentee.patenteeType }}</h3>
+              </div>
+            </li>
+            <li class="list__item" v-if="patentee.address">
+              <div class="item__box">
+                <label class="box__left f16">专利权人地址</label>
+                <h3 class="box__right c333 f16">{{ patentee.address }}</h3>
               </div>
             </li>
           </ul>
@@ -72,7 +166,7 @@
       </section>
 
       <!-- 审批记录 -->
-      <section class="approval__record mt10 mb10">
+      <section class="approval__record mt10 mb10 none">
         <header class="base--header f16">
           <h3 class="title">审批记录</h3>
           <i class="iconfont icon-unfold c9b f18" @click="handleFold(false, 'recordFold')" v-if="recordFold"></i>
@@ -125,10 +219,10 @@
       <section class="approval__form mt10 mb10">
         <h3 class="base--header f16">审批</h3>
         <section class="">
-          <textarea class="approval--opinion f16" name="opinion" row=3 placeholder="请输入审批意见"></textarea>
+          <textarea class="approval--opinion f16" name="opinion" v-model="opinion" row=3 placeholder="请输入审批意见"></textarea>
           <footer class="approval__actions f16">
-            <p class="approval--btn">通过</p>
-            <p class="approval--btn disable">不通过</p>
+            <p class="approval--btn" @click="handleApproval(1)">通过</p>
+            <p class="approval--btn disable" @click="handleApproval(0)">不通过</p>
           </footer>
           
         </section>
@@ -144,6 +238,10 @@ import {mapGetters} from 'vuex'
 import request from '@/utils/request.js'
 import api from '@/utils/api.js'
 
+import { Toast } from 'mint-ui'
+import 'mint-ui/lib/toast/style.css';
+
+import modules from '@/components/common/approval-modules.vue'
 import approvalMixin from '@/components/common/approval-mixin.js'
 
 
@@ -152,6 +250,8 @@ export default {
   data() {
     return {
       id: 0,
+      // 审批意见
+      opinion: '',
       baseFold: false,
       recordFold: false,
       authorFold: false,
@@ -165,12 +265,22 @@ export default {
           '[发证机关]': '文化部', 
           '[审核状态]': '学校通过' 
         },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
+        // 合同
+        'contract': null,
+        // 预算明细
+        'budgetInfo': null,
+        // 专利权人信息
+        'patenteeInfo': null,
+        // 合作单位
+        'cooperationUnitInfo': null,
+        // 合作单位（院外）
+        'cooperationUnitOuterInfo': null,
+        // 年度经费预算信息
+        'yearBudgetsInfo': null,
+        // lxDeclareProjectUnitInfo
+        'lxDeclareProjectUnitInfo': null,
+        // 年度计划
+        'yearProgressInfo': null
       },
       records: [{
         'reviewer': '关慧',
@@ -186,7 +296,7 @@ export default {
       attachments: [{ name: '立项批准文件或主管部门任务书、合同书', url: '', size: '' }]
     };
   },
-  components: {},
+  components: { modules },
   computed: {
     ...mapGetters([
       'mobile',
@@ -289,6 +399,44 @@ export default {
         // 需要预览文件的字节大小(必填)
         size: 1048576
       });
+    },
+
+    /*
+     * @method 审批
+     * @param status  1:同意  0:不同意
+     */
+    handleApproval(status) {
+      let url = api.COMMON_ACTION;
+      let params = {
+       actionType: 'todoCheck', 
+       moduleId: this.moduleID, 
+       productId: this.ID,
+       checkOpinion: this.opinion,
+       checkStatus: status
+     };
+
+     if(!this.opinion) {
+      Toast('请输入审核意见');
+
+      return this;
+     }
+
+      request.post(url, params).
+      then((res)=>{
+        console.info(res);
+
+        if(res.checkState === 'success') {
+          Toast({
+            message: '操作成功',
+            iconClass: 'icon icon-success'
+          });
+          
+          this.$router.back();
+        } else if(res.checkState === 'error'){
+          Toast(res.errorReason);
+        }
+
+      })
     }
   },
   created() {
@@ -306,6 +454,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+
+  .none {
+    display: none;
+  }
 
   .list__wrap {
     width: 100vw;

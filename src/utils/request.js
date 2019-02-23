@@ -16,9 +16,6 @@ const handleResponse = (res) => {
     return Promise.resolve(res.data)
   } else {
     // 没有权限
-    // if(res.data.status_code === 1 || res.data.status_code === 2 || res.data.status_code === 4) {
-    //   location.href = '/v/index/course/normalcourse/error/' + res.data.status_code;
-    // }
 
     return Promise.reject(res.data)
   }

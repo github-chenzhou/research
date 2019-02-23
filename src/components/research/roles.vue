@@ -65,6 +65,8 @@ export default {
     handleSetRole(id) {
       this.role = id;
       this.$store.commit('setRole', id);
+
+      this.$router.back();
     }
   },
   created() {
