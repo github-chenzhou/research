@@ -25,47 +25,35 @@
       </ul>
     </section>
 
+    <!-- 项目详情 -->
+    <detail-cmp :product-id="id" :module="module"></detail-cmp>
+
   </section>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
-import request from '@/utils/request.js'
-import api from '@/utils/api.js'
+import detailCmp from '@/components/research/approval-detail.vue'
 
 
 export default {
   name: "research-project",
   data() {
     return {
-      id: 0,
-      project2: {
-        'content': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
-        'title': '图景与前景：2016中外影视互译合作研究报告',
-        'date': '2018-08-28',
-        'type': '研究报告',
-        'fee': '100万',
-        'principal': '负责人',
-        'productid': 'yey234782348923418934234'
-      }
+      id: '',
+      module: '',
+      type: 1
     };
   },
-  components: {},
+  components: { detailCmp },
   computed: {
     ...mapGetters([
       'user',
       'project',
     ])
   },
-  watch: {},
+  watch: {
+  },
   filters: {
   },
   mixins: [],
@@ -74,24 +62,20 @@ export default {
      * @method 加载数据
      * @param
      */
-    getData(id) {
-      let url = api.GET_PROJECT;
-      let params = { userid: '', actionType: 'login' };
-
-      request.get(url, params).
-      then((res)=>{
-        this.project = res;
-      })
+    init(type) {
+      if(type === 1) {
+      } else {
+        this.module = this.project && this.project.content && this.project.content['[成果类型]'];
+      }
     },
   },
   created() {
-    let id = this.$route.params.id;
-    let type = +this.$route.params.type;
-
-    console.info(id, type);
+    this.id = this.$route.params.id;
+    this.type = +this.$route.params.type;
   },
   mounted() {
     document.title = '项目详情';
+    this.init(this.type);
   },
   beforeDestroy() {}
 };

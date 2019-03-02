@@ -203,12 +203,12 @@
       </section>
 
       <!-- 附件 -->
-      <section class="approval__annex mt10 mb10">
+      <section class="approval__annex mt10 mb10" v-if="project.fileInfo">
         <h3 class="base--header f16">附件</h3>
-        <ul class="record__list" v-for="file in attachments">
+        <ul class="record__list">
           <li class="list__item">
-            <div class="item__box" @click="handleViewFile">
-              <label class="box__left f16">{{ file.name }}</label>
+            <div class="item__box" @click="handleViewFile(project.fileInfo)">
+              <label class="box__left f16">{{ project.fileInfo['[电子附件]'] }}</label>
               <h3 class="box__right blue f16">查看</h3>
             </div>
           </li>
@@ -216,7 +216,7 @@
       </section>
 
       <!-- 审批已经确认 -->
-      <section class="approval__form mt10 mb10">
+      <section class="approval__form mt10 mb10" v-if="!productId">
         <h3 class="base--header f16">审批</h3>
         <section class="">
           <textarea class="approval--opinion f16" name="opinion" v-model="opinion" row=3 placeholder="请输入审批意见"></textarea>
@@ -247,6 +247,17 @@ import approvalMixin from '@/components/common/approval-mixin.js'
 
 export default {
   name: "research-project",
+  // 个人中心使用
+  props: {
+    productId: {
+      type: String,
+      default: ''
+    },
+    module: {
+      type: String,
+      default: ''
+    },
+  },
   data() {
     return {
       id: 0,
@@ -265,6 +276,8 @@ export default {
           '[发证机关]': '文化部', 
           '[审核状态]': '学校通过' 
         },
+        // 附件信息
+        fileInfo: null,
         // 合同
         'contract': null,
         // 预算明细
@@ -303,19 +316,33 @@ export default {
       'user'
     ])
   },
-  watch: {},
+  watch: {
+    module(newVal, oldVal) {
+      console.log(newVal);
+      if(newVal) {
+        this.init();
+      }
+    }
+  },
   filters: {
     formatTime(time) {}
   },
   mixins: [approvalMixin],
   methods: {
+    init() {
+      if(this.productId && this.module) {
+        this.moduleID = this.module;
+        this.getData(this.productId, this.module);
+      }
+    },
+
     /*
      * @method 加载数据
      * @param
      */
     getData(id, moduleId) {
       let url = api.COMMON_ACTION;
-      let params = { actionType: 'todolist', moduleId: this.moduleID, productId: this.ID };
+      let params = { actionType: 'todolist', moduleId: moduleId || this.moduleID, productId: id || this.ID };
 
       request.get(url, params).
       then((res)=>{
@@ -375,6 +402,11 @@ export default {
         this.project.authorInfo = data.authorInfo;
       }
 
+      // 附件信息
+      if(data.fileInfo) {
+        this.project.fileInfo = JSON.parse(data.fileInfo);
+      }
+
       console.info(this.project);
     },
 
@@ -386,19 +418,26 @@ export default {
       this[key] = isFold;
     },
 
-    handleViewFile() {
+    /*
+     * @method 预览附件
+     * @param
+     */
+    handleViewFile(fileInfo) {
       // 两种方案 一种直接打开 需要第三方应用
-      location.href = 'http://sfe.ykt.io/o_1ct479fitgdk1fd91p05jousl69.docx';
+      // 'http://sfe.ykt.io/o_1ct479fitgdk1fd91p05jousl69.docx'
+      location.href = fileInfo['[附件链接]'] || fileInfo['[其它附件链接]'];
 
       // 第二种微信api打开需要config签名之类
-      wx.previewFile({
-        // 需要预览文件的地址(必填，可以使用相对路径)
-        url: 'http://sfe.ykt.io/o_1ct479fitgdk1fd91p05jousl69.docx',
-        // 需要预览文件的文件名(不填的话取url的最后部分)
-        name: '立项批准文件或主管部门任务书、合同书',
-        // 需要预览文件的字节大小(必填)
-        size: 1048576
-      });
+      if(typeof wx !== 'undefined') {
+        wx.previewFile({
+          // 需要预览文件的地址(必填，可以使用相对路径)
+          url: fileInfo['[附件链接]'] || fileInfo['[其它附件链接]'],
+          // 需要预览文件的文件名(不填的话取url的最后部分)
+          name: fileInfo['[电子附件]'],
+          // 需要预览文件的字节大小(必填)
+          size: 1048576
+        });
+      }
     },
 
     /*
@@ -443,7 +482,9 @@ export default {
     this.ID = this.$route.params.id;
     this.moduleID = this.$route.params.module;
 
-    this.getData(this.ID, this.moduleID);
+    if(this.ID && this.moduleID) {
+      this.getData(this.ID, this.moduleID);
+    }
   },
   mounted() {
     document.title = '审批详情';
@@ -505,6 +546,7 @@ export default {
   }
 
   .box__right {
+    min-width: 80px;
     flex: 1;
     text-align: right;
   }

@@ -27,7 +27,8 @@
     computed: {
       ...mapGetters([
         'mobile',
-        'user'
+        'user',
+        'role'
       ])
     },
     watch: {
@@ -102,7 +103,9 @@
             // 设置当前角色
             if(res.groups) {
               let ids = res.groups.split(',');
-              this.$store.commit('setRole', ids[0]);
+              if(!this.role) {
+                this.$store.commit('setRole', ids[0]);
+              }
             }
           })
         }

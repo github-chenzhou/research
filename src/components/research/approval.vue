@@ -4,7 +4,7 @@
       <!-- 审批列表 -->
       <ul class="approval__list">
         <!-- <router-link tag="li" :to="'/approvaldetail/'+item.id"  class="approval__item" v-for="item in approvals"> -->
-        <li class="approval__item" v-for="item in approvals" @click="handleLink(item)">
+        <li class="approval__item J_approval" :data-id="item.productId" v-for="item in approvals" @click="handleLink(item)">
           <!-- 审批标题和日期 -->
           <div class="item__box">
             <h3 class="title blue f15">{{ item.title }}</h3>
@@ -69,11 +69,33 @@ export default {
     },
 
     /**
-      * @method 格式化数据抽象数据mode
-      * @param
-      */
-    formatData(data) {
-      
+     * @method 恢复上次滚动位置
+     *
+     */
+    restorelocation() {
+      var $page = $(this.$el);
+      var key = 'discussion' + this.id;
+      var pageY = +localStorage.getItem(key);
+      var scrollToPageY = function(c) {
+        if (c > 0) {
+          $page.scrollTop(c);
+        }
+      };
+
+      // 定位到上次打开位置
+      if(pageY > 300) {
+        scrollToPageY(pageY);
+      }
+    },
+
+    /*
+     * @method 滚动到上次预览位置
+     * @param
+     */
+    handleScrollToView(id) {
+      setTimeout(()=>{
+        this.$el.querySelector('.J_approval[data-id="'+id+'"]').scrollIntoView();
+      }, 20)
     },
 
     /*
@@ -85,11 +107,30 @@ export default {
         name: 'approvaldetail', 
         params: { module: info.moduleId, id: info.productId }
       })
+
+      // 记录当前帖子评论列表
+      if(window.approvalsMap) {
+        let record = {
+          id: info.productId,
+          module: info.moduleId
+        };
+
+        window.approvalsMap.set(this.role, record);
+      }
     },
   },
   created() {
     if(window.approvals) {
       this.approvals = window.approvals;
+    }
+
+    // 评论列表数据做缓存
+    if(window.approvalsMap) {
+      let record = window.approvalsMap.get(this.role);
+
+      record && this.handleScrollToView(record.id);
+    } else {
+      window.approvalsMap = new Map();
     }
 
     document.title = '科研系统审批中心';
