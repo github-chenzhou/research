@@ -208,7 +208,7 @@
         <ul class="record__list">
           <li class="list__item">
             <div class="item__box" @click="handleViewFile(project.fileInfo)">
-              <label class="box__left f16">{{ project.fileInfo['[电子附件]'] }}</label>
+              <label class="box__left f16">{{ project.fileInfo['[电子附件]'] || project.fileInfo['[标准申报资料]'] }}</label>
               <h3 class="box__right blue f16">查看</h3>
             </div>
           </li>
