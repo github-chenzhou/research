@@ -166,14 +166,14 @@
       </section>
 
       <!-- 审批记录 -->
-      <section class="approval__record mt10 mb10 none">
+      <section class="approval__record mt10 mb10">
         <header class="base--header f16">
           <h3 class="title">审批记录</h3>
           <i class="iconfont icon-unfold c9b f18" @click="handleFold(false, 'recordFold')" v-if="recordFold"></i>
           <i class="iconfont icon-fold c9b f18" @click="handleFold(true, 'recordFold')" v-else></i>
         </header>
         <div v-show="!recordFold" >
-          <ul class="record__list" v-for="record in records">
+          <ul class="record__list" v-for="record in checkLogInfo">
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">审核人</label>
