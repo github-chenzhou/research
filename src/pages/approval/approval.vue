@@ -58,6 +58,8 @@
        * @param code
        */
       checkAuth(code) {
+        let key = 'login-mobile';
+
         if(code) {
           let url = api.GET_USER_INFO;
           let params = { code };
@@ -73,8 +75,6 @@
             this.login(res.mobile);
 
             this.$store.commit('setMobile', res.mobile);
-
-            let key = 'login-mobile';
             if(isSupported(window.localStorage)) {
               res.mobile && localStorage.setItem(key, res.mobile);
             }
@@ -83,6 +83,10 @@
         } else {
           // let phone = 18301598160;
           let phone = 18601260931;
+          if(isSupported(window.localStorage)) {
+            phone = localStorage.getItem(key);
+          }
+
           this.login(phone);
         }
       },
