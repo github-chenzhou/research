@@ -177,25 +177,25 @@
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">审核人</label>
-                <h3 class="box__right c333 f16">{{ record.reviewer }}</h3>
+                <h3 class="box__right c333 f16">{{ record.checker }}</h3>
               </div>
             </li>
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">审核状态</label>
-                <h3 class="box__right c333 f16">{{ record.status }}</h3>
+                <h3 class="box__right c333 f16">{{ record.checkStatus }}</h3>
               </div>
             </li>
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">审核意见</label>
-                <h3 class="box__right c333 f16">{{ record.opinion }}</h3>
+                <h3 class="box__right c333 f16">{{ record.checkInfo }}</h3>
               </div>
             </li>
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">审核时间</label>
-                <h3 class="box__right c333 f16">{{ record.time }}</h3>
+                <h3 class="box__right c333 f16">{{ record.checkDate }}</h3>
               </div>
             </li>
           </ul>
@@ -295,16 +295,11 @@ export default {
         // 年度计划
         'yearProgressInfo': null
       },
-      records: [{
-        'reviewer': '关慧',
-        'status': '已通过',
-        'time': '2017-05-27 15:30',
-        'opinion': 'XXXXXXXXXX',
-      },{
-        'reviewer': '闫工',
-        'status': '已通过',
-        'time': '2017-06-12 15:30',
-        'opinion': 'XXXXXXXXXX',
+      checkLogInfo: [{
+        'checker': '关慧',
+        'checkStatus': '已通过',
+        'checkDate': '2017-05-27 15:30',
+        'checkInfo': '',
       }],
       attachments: [{ name: '立项批准文件或主管部门任务书、合同书', url: '', size: '' }]
     };
@@ -405,6 +400,11 @@ export default {
       // 附件信息
       if(data.fileInfo) {
         this.project.fileInfo = JSON.parse(data.fileInfo);
+      }
+
+      // 审核记录
+      if(data.checkLogInfo) {
+        this.checkLogInfo = data.checkLogInfo;
       }
 
       console.info(this.project);

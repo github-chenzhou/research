@@ -64,6 +64,7 @@ export default {
      */
     init(type) {
       if(type === 1) {
+        this.module = this.project && this.project.content && this.project.content['[成果类型]'];
       } else {
         this.module = this.project && this.project.content && this.project.content['[成果类型]'];
       }
