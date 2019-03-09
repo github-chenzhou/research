@@ -84,7 +84,7 @@
           // let phone = 18301598160;
           let phone = 18601260931;
           if(isSupported(window.localStorage)) {
-            phone = localStorage.getItem(key);
+            phone = localStorage.getItem(key) || phone;
           }
 
           this.login(phone);

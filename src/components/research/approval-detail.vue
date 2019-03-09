@@ -404,7 +404,16 @@ export default {
 
       // 审核记录
       if(data.checkLogInfo) {
-        this.checkLogInfo = data.checkLogInfo;
+        let checkLogInfo = data.checkLogInfo;
+        checkLogInfo && checkLogInfo.forEach((item)=>{
+          for(let key in item) {
+            if(item[key] === 'null') {
+              item[key] = '';
+            }
+          }
+        })
+
+        this.checkLogInfo = checkLogInfo;
       }
 
       console.info(this.project);
