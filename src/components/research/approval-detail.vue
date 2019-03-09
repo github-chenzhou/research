@@ -58,7 +58,7 @@
             <li class="list__item">
               <div class="item__box">
                 <label class="box__left f16">机构</label>
-                <h3 class="box__right c333 f16">{{ author.authorUnit || author.unitName }}</h3>
+                <h3 class="box__right c333 f16">{{ author.authorUnit|resetNull || author.unitName|resetNull }}</h3>
               </div>
             </li>
             <li class="list__item">
@@ -203,7 +203,7 @@
       </section>
 
       <!-- 附件 -->
-      <section class="approval__annex mt10 mb10" v-if="project.fileInfo">
+      <section class="approval__annex mt10 mb10" v-if="project.fileInfo && (project.fileInfo['[电子附件]'] || project.fileInfo['[标准申报资料]'])">
         <h3 class="base--header f16">附件</h3>
         <ul class="record__list">
           <li class="list__item">
@@ -267,17 +267,9 @@ export default {
       recordFold: false,
       authorFold: false,
       project: {
-        'baseInfo': {
-          '[获奖作者]': '金海娜', 
-          '[所属科室]': '外国语学院', 
-          '[获奖级别]': '其它', 
-          '[获奖等级]': '其他奖', 
-          '[获奖日期]': '2017-05-27', 
-          '[发证机关]': '文化部', 
-          '[审核状态]': '学校通过' 
-        },
+        'baseInfo': null,
         // 附件信息
-        fileInfo: null,
+        'fileInfo': null,
         // 合同
         'contract': null,
         // 预算明细
@@ -295,12 +287,7 @@ export default {
         // 年度计划
         'yearProgressInfo': null
       },
-      checkLogInfo: [{
-        'checker': '关慧',
-        'checkStatus': '已通过',
-        'checkDate': '2017-05-27 15:30',
-        'checkInfo': '',
-      }],
+      checkLogInfo: [],
       attachments: [{ name: '立项批准文件或主管部门任务书、合同书', url: '', size: '' }]
     };
   },
@@ -320,7 +307,13 @@ export default {
     }
   },
   filters: {
-    formatTime(time) {}
+    resetNull(field) {
+      if(field && field === 'null') {
+        field = '';
+      }
+
+      return field;
+    }
   },
   mixins: [approvalMixin],
   methods: {
@@ -361,7 +354,11 @@ export default {
      * @param 
      */
     getValue(jsonStr) {
-      return new Function("return " + jsonStr)()
+      try {
+        return new Function("return " + jsonStr)();
+      } catch(evt) {
+        console.log(jsonStr);
+      }
     },
     
     /*
