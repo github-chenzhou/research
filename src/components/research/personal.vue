@@ -23,7 +23,7 @@
                 <!-- 项目名称 -->
                 <h3 class="title f15">{{ item.title }}</h3>
                 <!-- 创建时间 -->
-                <p class="date f12" v-if="item.content && item.content['[开始时间]']">{{ item.content['[开始时间]'] }}</p>
+                <p class="date f12" v-if="item.content && item.content['[开始时间]']">{{ item.content['[开始时间]']|formatDate }}</p>
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
@@ -40,7 +40,7 @@
                 <!-- 项目名称 -->
                 <h3 class="title f15">{{ item.title }}</h3>
                 <!-- 完成日期 -->
-                <p class="date f12" v-if="item.content && item.content['[完成日期]']">{{ item.content['[完成日期]'] }}</p>
+                <p class="date f12" v-if="item.content && item.content['[完成日期]']">{{ item.content['[完成日期]']|formatDate }}</p>
               </div>
               <div class="item__box pb10 f14">
                 <!-- 负责人 -->
@@ -93,7 +93,13 @@ export default {
   },
   watch: {},
   filters: {
-    formatTime(time) {}
+    formatDate(time) {
+      if(time && typeof time === 'string') {
+        time = time.split(' ')[0];
+      }
+
+      return time;
+    }
   },
   mixins: [],
   methods: {
