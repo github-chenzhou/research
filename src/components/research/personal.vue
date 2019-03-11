@@ -48,7 +48,7 @@
                 <!-- 成果成员 -->
                 <h3 class="" v-if="item.content && item.content['[成果成员]']">{{ item.content['[成果成员]'] }}</h3>
                 <!-- 类型 -->
-                <p class="" v-if="item.content && item.content['[成果类型]']">{{ item.content['[成果类型]'] }}</p>
+                <!-- <p class="" v-if="item.content && item.content['[成果类型]']">{{ item.content['[成果类型]'] }}</p> -->
               </div>
             </section>
           </li>
@@ -70,22 +70,6 @@ import {mapGetters} from 'vuex'
 import request from '@/utils/request.js'
 import api from '@/utils/api.js'
 
-// {
-//         'content': {
-//           '[获奖作者]': '金海娜', 
-//           '[所属科室]': '外国语学院', 
-//           '[获奖级别]': '其它', 
-//           '[获奖等级]': '其他奖', 
-//           '[获奖日期]': '2017-05-27', 
-//           '[发证机关]': '文化部', 
-//           '[审核状态]': '学校通过' 
-//         },
-//         'title': '图景与前景：2016中外影视互译合作研究报告',
-//         'date': '2018-08-28',
-//         'type': '研究报告',
-//         'principal': '负责人',
-//         'productid': 'yey234782348923418934234'
-//       }
 
 export default {
   name: "research-personal",

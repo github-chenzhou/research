@@ -14,7 +14,7 @@
           <li class="list__item" v-for="(value, key) in project.baseInfo">
             <div class="item__box">
               <label class="box__left f16">{{ key }}</label>
-              <h3 class="box__right c333 f16">{{ value }}</h3>
+              <h3 class="box__right c333 f16">{{ value|resetNull }}</h3>
             </div>
           </li>
 
@@ -22,7 +22,7 @@
           <li class="list__item" v-for="(value, key) in project.detailInfo">
             <div class="item__box">
               <label class="box__left f16">{{ key }}</label>
-              <h3 class="box__right c333 f16">{{ value }}</h3>
+              <h3 class="box__right c333 f16">{{ value|resetNull }}</h3>
             </div>
           </li>
         </ul>
@@ -80,7 +80,7 @@
           <li class="list__item" v-for="(value, key) in project.contract">
             <div class="item__box">
               <label class="box__left f16">{{ key }}</label>
-              <h3 class="box__right c333 f16">{{ value }}</h3>
+              <h3 class="box__right c333 f16">{{ value|resetNull }}</h3>
             </div>
           </li>
         </ul>
